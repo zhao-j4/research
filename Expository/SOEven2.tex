@@ -1,0 +1,59 @@
+For the two level density, we are interested in finding an optimal test function $\Phi : \R^2 \to \R$ with Fourier transform supported in $[-2\sigma, -2\sigma] \times [-2\sigma, -2\sigma]$ minimizing 
+	\[ \frac{1}{\Phi(0, 0)} \int_{\R^2} \Phi(x, y) W_G (x, y) dx dy.  \]
+Putting restrictions on $\Phi$, such as assuming it is of the form $\Phi(x, y) = \phi(x) \psi (y)$, makes the problem much easier while hopefully giving us a good upper bound on the true value of the minimum. Charlie was interested in $\sigma = 1/2$ with 
+	\[\psi (x) = \left(\frac{\sin(\pi x)}{\pi x}\right)^2, \qquad \widehat \psi (x) = (1 - |x|) \mathbb 1_{[-1, 1]} (x). \] 
+Analogous to the set-up in Appendix A of ILS and Jesse Freeman's thesis, Charlie found that finding the optimal $\phi: \R \to \R$ was equivalent to finding the unique solution $g \in L^2 [-1/2, 1/2]$ satisfying equation
+\begin{equation}
+	g(x) - \int_{-1/2}^{1/2} m_G (x - y) g(y) dy = 1,		\label{eq:fredholm}
+\end{equation}
+for all $x \in [-1/2, 1/2]$. Charlie proved that $g$ is even, increasing on $[-1/2, 0]$ and decreasing on $[0, 1/2]$. This seems to suggest that solutions are of the form $g (x) = a \cos (p x) + c$ for some period $p > 0$ and constants $a, c \in \R$. We show that this is indeed the case for $\SpOrthE$, which has corresponding kernel
+\begin{equation}
+	m_{\SpOrthE} (x) = -\frac12 + \frac43 (1 - |x|)^2 + \frac23 (1 - x^2).	\label{eq:mSpOrthE}
+\end{equation}
+Substituting (\ref{eq:mSpOrthE}) into (\ref{eq:fredholm}) gives
+\[
+	- \frac32 \int_{-1/2}^{1/2} g(y) dy + \frac83  \int_{-1/2}^{1/2} |x - y| g(y)dy - \frac23  \int_{-1/2}^{1/2} (x - y)^2 g(y) dy = 1
+\]
+for all $x \in [-1/2, 1/2]$. Notice that 
+	\[  \int_{-1/2}^{1/2} |x - y| g(y) dy = \int_{-1/2}^x (x - y) g(y) dy + \int_x^{1/2} (y - x) g(y) dy. \]
+Differentating under the integral sign gives	
+\begin{align*}
+	\frac{d}{dx}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+		&= \int_{-1/2}^x g(y) dy - \int_x^{1/2} g(y) dy, \\
+	\frac{d^2}{dx^2}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+		&= 2g(x)		
+\end{align*}
+and
+\begin{align*}
+	\frac{d}{dx} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+		&= \int_{-1/2}^{1/2} (2x - 2y) g(y) dy, \\
+	\frac{d^2}{dx^2} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+		&= 2 \int_{-1/2}^{1/2} g(y) dy.
+\end{align*}
+Thus, (\ref{eq:fredholm}) becomes, after differentiating three times with respect to $x$, 
+	\[ g'''(x) + \frac{16}{3} g'(x) = 0 \]
+for all $x \in [-1/2, 1/2]$. The solution set consists of the trigonometric polynomials $a \cos(4x/\sqrt 3) + b \sin(4x/\sqrt 3) + c$ for some constants $a, b, c \in \R$. We know $g$ is even, so this forces $b = 0$. To obtain the remaining coefficients, we differentiate (\ref{eq:fredholm}) twice to obtain
+	\begin{align*}
+		0 
+			&= g'' (x) + \frac{16}{3} g(x) - \frac43 \int_{-1/2}^{1/2} g(y) dy \\
+			&= 4 c - \frac43  a \int_{-1/2}^{1/2} \cos(4y/\sqrt 3) dy.
+	\end{align*}
+Rearranging, 
+	\[ c = \frac13 a \int_{-1/2}^{1/2} \cos(4y/\sqrt 3) dy = \frac23 a \int_{0}^{1/2} \cos(4y/\sqrt 3) dy = \frac{\sin(2/\sqrt 3)}{2 \sqrt 3} a. \]	
+This shows that $g$ is a scalar multiple of $\cos(4x/\sqrt 3) + \frac{\sin(2/\sqrt 3)}{2 \sqrt 3}$. Plugging into (\ref{eq: fredholm}) for $x = 0$ should give the desired multiplicative constant. 
+
+\begin{theorem}
+	The solutions to the integral equation
+		\[ g_G (x) - \int_{-1/2}^{1/2} m_G (x - y) g_G (y) dy = 1 \]
+	for $x \in [-1/2, 1/2]$ are 
+		\begin{align*}
+			g_{\SpOrthE} (x) 
+				&= \frac{216 \cos(4x/\sqrt 3) + 36 \sqrt 3 \sin(2/\sqrt 3)}{-162 \cos(2/\sqrt 3) + 5 \sqrt{3} \sin(2/\sqrt 3}), \\
+			g_{\SpOrthO} (x)
+				&= \frac{8 \cos (4x) + 12 \sin(2)}{2 \cos (2) + 3 \sin(2)}, \\
+			g_{\Unit} (x)
+				&= \frac{6 \cos (2x) + 6 \sin(1)}{3 \cos(1) + 4 \sin(1)}, \\
+			g_{\Orth} (x)
+				&= \frac{6 \cos(2x \sqrt 2) + 3 \sqrt 2 \sin(\sqrt 2)}{3 \cos(\sqrt 2) + \sqrt 2 \sin (\sqrt 2)}			
+		\end{align*}	
+\end{theorem}

@@ -1,0 +1,19 @@
+We have solved the minimization problem for fixed $\psi$; our goal now is to generalize by optimizing over a larger class of $\psi$. Supposing that we can write $\widehat\psi = g * g$ for some even real valued function $g \in L^2 [-1/2, 1/2]$, we consider $g$ which are solutions to the earlier minimization problem, namely functions of the form 
+	\[ g(x) = a \cos (bx) + c. \]
+Since the problem is scaling invariant, we can normalize the constant term $c = 1$. For brevity, denote $h : \R \to \R$ the Fourier inverse of the map $x \mapsto \cos (bx) \mathbb 1_{[-1/2, 1/2]} (x)$. WolframAlpha gives us explicitly
+	\begin{equation}
+		h(x) = \int_{-1/2}^{1/2} e^{2\pi i x y } \cos(by) dy = \frac{2b \sin(b/2) \cos(\pi x) - 4\pi x \cos(b/2) \sin(\pi x)}{b^2 - 4 \pi^2 x^2}. 
+	\end{equation}	
+For notational convenience, denote $\cF$ the Fourier transform operator, i.e. $\cF \phi = \widehat \phi$. Viewing $g$ as a function on $\R$ supported on $[-1/2, 1/2]$, its Fourier inverse takes the form
+	\[ 
+		\cF^{-1} (g) (x) = a \int_{-1/2}^{1/2} e^{2\pi i x y} \cos(by) dy + \int_{-1/2}^{1/2} e^{2\pi i x y} dy  = a h(x) + \frac{\sin(\pi x)}{\pi x}.
+	\]
+As the Fourier transform and its inverse take convolutions to products and vice versa, we have 
+	\begin{equation}
+		\psi(x) 
+			= \cF^{-1 } {g * g} (x)
+			= \left[\cF^{-1}(g) (x)\right]^2 
+			= [ah(x)]^2 + 2 a h(x) \frac{\sin(\pi x)}{\pi x} + \left( \frac{\sin (\pi x)}{\pi x} \right)^2.
+	\end{equation}
+Notice the last term is exactly our original $\psi$ that was used earlier. This is unsurprising since we are pushing around convolutions and Fourier transforms of trigonometric polynomials, so by linearity the constant term should pop out. 
+	\[ \widehat \psi (x) = a \cF \left( [h(x)]^2\right)+  a \cF { \left( h(x) \frac{\sin (\pi x)}{\pi x} \right)} + (1 - |x|) \mathbb 1_{[-1, 1]} (x). \]	

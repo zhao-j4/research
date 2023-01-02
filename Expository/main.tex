@@ -1,0 +1,199 @@
+\documentclass[11pt, reqno]{article}
+
+\usepackage{amsfonts,latexsym,amsthm,amssymb,amsmath,amscd,euscript,bm}
+\usepackage[sc]{mathpazo}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+% sets numbering of enumerate to a, b, c, ...
+\renewcommand{\theenumi}{\alph{enumi}}
+
+% Theorems, propositions, etc.
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+% Allows us of widecheck since loading mathabx causes problems 
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+\DeclareMathAccent{\widecheck}{0}{mathx}{"71}
+\DeclareMathAccent{\wideparen}{0}{mathx}{"75}
+
+% Examples put into boxes, just an aesthetic choice
+% {examplebox} for a single example, {example} is a list environment (\item) for a list of examples. 
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+	\mdfdefinestyle{mdrecbox}
+		{%
+			linewidth=0.5pt,
+			skipabove=12pt,
+			frametitleaboveskip=5pt,
+			frametitlebelowskip=0pt,
+			skipbelow=2pt,
+			frametitlefont=\bfseries,
+			innertopmargin=4pt,
+			innerbottommargin=8pt,
+			nobreak=true,
+		}
+	\declaretheoremstyle
+		[
+			headfont=\bfseries,
+			mdframed={style=mdrecbox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt},
+		]
+		{thmrecbox}
+	\declaretheorem[style=thmrecbox,name=Example, numberlike=theorem]{examplebox}
+
+
+\newenvironment{example}
+	{
+	\begin{examplebox} 
+	\leavevmode
+	\begin{enumerate}}
+	{	\end{enumerate} 
+	\end{examplebox}
+	}
+
+
+% Math blackboard font
+\newcommand{\nc}{\newcommand}
+\nc{\on}[1]{\operatorname{#1}}
+
+\nc{\R}{\mathbb R}
+\nc{\C}{\mathbb C}
+\nc{\Q}{\mathbb Q}
+\nc{\Z}{\mathbb Z}
+\nc{\N}{\mathbb N}
+\nc{\HH}{\mathbb H}
+\nc{\DD}{\mathbb D}
+\nc{\TT}{\mathbb T}
+
+\nc{\cT}{\mathcal T}
+\nc{\cP}{\mathcal P}
+\nc{\cM}{\mathcal M}
+\nc{\cC}{\mathcal C}
+\nc{\cB}{\mathcal B}
+\nc{\cG}{\mathcal G}
+\nc{\cA}{\mathcal A}
+\nc{\cS}{\mathcal S}
+\nc{\cF}{\mathcal F}
+\nc{\cL}{\mathcal L}
+\nc{\cR}{\mathcal R}
+
+\nc{\frakI}{\mathfrak I}
+
+\nc{\diam}{\operatorname{diam}}     % diameter of a set
+\nc{\osc}{\operatorname{osc}}       % oscillation of a function
+\nc{\inter}{\mathrm{o}}             % interior of a set
+\nc{\close}[1]{\overline{#1}}       % closure of a set
+\nc{\supp}{\operatorname{supp}}     % support of a function
+
+\nc{\Symp}{\mathsf{Sp}}
+\nc{\SpOrthO}{\mathsf{SO(odd)}}
+\nc{\SpOrthE}{\mathsf{SO(even)}}
+\nc{\Orth}{\mathsf O}
+\nc{\Unit}{\mathsf U}
+\nc{\UnitSp}{\mathsf{USp}}
+
+% Why would you ever use \epsilon
+\renewcommand{\epsilon}{\varepsilon}
+
+% Title: change problem set number as needed
+\title
+{
+	\textsc{Determining optimal test functions for $2$-level densities}
+} 
+
+\author{Jason Zhao}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+
+\begin{abstract}
+	It is of great interest to study the order of vanishing at the central
+point of $L$-functions, such as the famous Riemann zeta function and its
+generalizations. For example, the Birch and Swinnerton-Dyer conjecture
+relates the order of vanishing for an elliptic curve $L$-function to the
+rank of its group of rational solutions. Katz and Sarnak conjectured a
+correspondence between the $n$-level density statistics of zeros from
+families of $L$-functions (which essentially involves $n$-tuples of zeros)
+with eigenvalues from random matrix ensembles, and in many cases that sums of smooth test functions, whose Fourier transforms are
+finitely supported over scaled zeros in a family, converge to an integral of
+the test function against a density $W_{n, G}$ depending on the
+symmetry $G$ of the family (unitary, symplectic or orthogonal). This integral bounds the average order of vanishing at the central point of the corresponding family of $L$-functions. 
+
+We can obtain better estimates on this vanishing in two ways. The first is
+to do more number theory, and prove results for larger $n$ and greater
+support; the second is to do functional analysis and obtain better test
+functions to minimize the resulting integrals. We pursue the latter here
+when $n=2$, minimizing  
+	\[ \frac{1}{\Phi(0, 0)} \int_{{\mathbb R}^2} W_{2,G} (x, y) \Phi(x, y) dx dy \] 
+over test functions $\Phi : {\mathbb R}^2
+\to [0, \infty)$ with compactly supported Fourier transform. We study a
+restricted version of this optimization problem, imposing that our test
+functions take the form $\phi(x) \psi(y)$ for some fixed admissible $\psi(y)$ and
+$\supp{\widehat \phi} \subseteq [-1, 1]$, thereby reducing the problem to
+one analogous to the 1-level density case in optimizing over one-variable
+test functions $\phi(x)$. Continuing with the analogy, Devlin and Miller
+extended the functional analytic arguments of Iwaniec, Luo and Sarnak,
+converting the restricted optimization problem to finding the unique $g
+\in L^2[-1/2, 1/2]$ satisfying a Fredholm integral equation of the second
+kind. From here we take two approaches. First, showing $g$ satisfies a homogeneous linear system
+of differential equations, a method introduced by Freeman and Miller, from
+which we can derive a closed form expression for $g$. Second, iterating to obtain a series representation of $g$ and truncating to compute explicit estimates on the minimum value.  We conclude by discussing improvements to previous bounds.
+\end{abstract}
+
+\tableofcontents
+\end{titlepage}
+
+\section{Prepatory material}
+\input{prep}
+
+\section{One level}
+\input{examp}
+
+\section{Quadratic kernel}
+\input{quad}
+
+\section{Worked example: two-level $\SpOrthE$ for $\sigma = 1/2$}
+\input{SOEven2}
+
+\section{Iteration}
+\input{iteration}
+
+\begin{thebibliography}{9999}
+
+%number of characters controls spacing; must be longer than longest name
+
+\bibitem[ILS]{ILS}
+\newblock H. Davenport, \emph{Multiplicative Number Theory}, second
+edition, Graduate Texts in Mathematics \textbf{74},
+Springer-Verlag, New York, 1980, revised by H. Montgomery.
+
+\bibitem[FM]{FreemanMiller}
+\newblock A. Y. Khinchin, \emph{Continued Fractions},  Third
+Edition, The University of Chicago Press, Chicago 1964.
+
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,17 @@
+Let
+	\[ K(y) := \frac{\sin (\pi y)}{\pi y}, \qquad K_\epsilon (x, y) := K(x - y) + \epsilon K(x + y) \]
+for $\epsilon = 0, \pm 1$. 
+	\[ \int_{\R^n} \Phi(x_1, \dots, x_n) W_{n, G} (x_1, \dots, x_n) dx_1 \cdots dx_n = \int_{\R^n} \widehat{\Phi} (x_1, \dots, x_n) \widehat{W_{n, G}} (x_1, \dots, x_n) dx_1 \cdots dx_n, \]	
+where 
+	\begin{align}
+		W_{n, \SpOrthE} (x) 	
+			&= \det \left( K_1 (x_i, x_j) \right)_{i, j \leq n}, \\
+		W_{n, \SpOrthO} (x)
+			&= \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n} + \sum_{k = 1}^n \delta (x_k) \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \neq k},  \\
+		W_{n, \Orth} (x)
+			&= \frac12 W_{n, \SpOrthE} (x) + \frac12 W_{n, \SpOrthO} (x), \\
+		W_{n, \Unit} (x)
+			&= \det \left( K_0 (x_i, x_j) \right)_{i, j, \leq n}, \\
+		W_{n, \Symp} (x)			
+			&=\det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n}. \\
+	\end{align}

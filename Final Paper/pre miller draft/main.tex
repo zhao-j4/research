@@ -1,0 +1,111 @@
+\documentclass[12pt, reqno]{amsart}
+
+\usepackage{amsfonts,latexsym,amsthm,amssymb,amsmath,amscd,euscript,bm}
+\usepackage[sc]{mathpazo}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+% sets numbering of enumerate to a, b, c, ...
+\renewcommand{\theenumi}{\alph{enumi}}
+
+% equation label with section number
+\numberwithin{equation}{section}
+
+% Theorems, propositions, etc.
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+\newcommand{\nc}{\newcommand}
+\nc{\on}[1]{\operatorname{#1}}
+
+\nc{\R}{\mathbb R}
+\nc{\C}{\mathbb C}
+\nc{\Q}{\mathbb Q}
+\nc{\Z}{\mathbb Z}
+\nc{\N}{\mathbb N}
+\nc{\HH}{\mathbb H}
+\nc{\DD}{\mathbb D}
+\nc{\TT}{\mathbb T}
+\nc{\EE}{\mathbb E}
+
+\nc{\cT}{\mathcal T}
+\nc{\cP}{\mathcal P}
+\nc{\cM}{\mathcal M}
+\nc{\cC}{\mathcal C}
+\nc{\cB}{\mathcal B}
+\nc{\cG}{\mathcal G}
+\nc{\cA}{\mathcal A}
+\nc{\cS}{\mathcal S}
+\nc{\cF}{\mathcal F}
+\nc{\cL}{\mathcal L}
+\nc{\cR}{\mathcal R}
+
+\nc{\frakI}{\mathfrak I}
+
+\nc{\diam}{\operatorname{diam}}     % diameter of a set
+\nc{\osc}{\operatorname{osc}}       % oscillation of a function
+\nc{\inter}{\mathrm{o}}             % interior of a set
+\nc{\close}[1]{\overline{#1}}       % closure of a set
+\nc{\supp}{\operatorname{supp}}     % support of a function
+\nc{\Prob}{\operatorname{Pr}}       % probability 
+
+\nc{\Symp}{\mathsf{Sp}}
+\nc{\SpOrthO}{\mathsf{SO(odd)}}
+\nc{\SpOrthE}{\mathsf{SO(even)}}
+\nc{\Orth}{\mathsf O}
+\nc{\Unit}{\mathsf U}
+\nc{\UnitSp}{\mathsf{USp}}
+
+% Why would you ever use \epsilon
+\renewcommand{\epsilon}{\varepsilon}
+
+
+% Title: change problem set number as needed
+\title
+{
+	\textsc{Determining optimal test functions for $2$-level densities}
+} 
+
+\author{Charles Devlin VI, El\.zbieta Bo\l dyriew, Fangu Chen, Stephen J. Miller, Jason Zhao}
+\date{\today}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+
+\begin{abstract}
+	\input{abstract}
+\end{abstract}
+
+\tableofcontents
+\end{titlepage}
+\section{Introduction}
+\input{introduction}
+
+\section{Proof of Theorem \ref{thm:optimalgpsi}}
+\input{proof}
+
+\section{Iteration}
+\input{iteration}
+
+\section{Conclusion}
+\input{conclusion}
+
+\bibliography{biblio}
+\bibliographystyle{alpha} 
+
+
+
+\end{document}

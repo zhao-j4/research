@@ -1,0 +1,163 @@
+\subsection{Functional analytic setup}
+
+Prior literature on the optimization problem, such as \cite{FreemanMiller} and \cite{FreemanThesis}, dealt with the 1-level densities following the functional analytic approach outlined in Appendix A of \cite{ILS}. We want to impose restrictions so that such an approach is amenable to the 2-level density optimization problem. To that end, we consider the optimization over test functions of the form $\Phi(x, y) = \phi(x) \psi(y)$ for fixed admissible $\psi(y)$ with $\supp \widehat\psi \subseteq [-1, 1]$. This reduces the problem to one analogous to the 1-level density, where we are interested in finding an optimal one-variable test function. Explicitly, we want to compute
+\begin{equation}
+    \inf_\phi \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy \label{eq:2minimize}
+\end{equation}
+where the infimum is taken over test functions $\phi : \R \to \R$ with $\supp \widehat \phi \subseteq [-1, 1]$. Attacking the optimization problem via the Fourier transform is more promising than a direct approach. On the transform side, assumptions on the support reduce an integration over the entire plane $\R^2$ to an integration over the square $[-1, 1] \times [-1, 1]$, and the 2-level densities themselves are unwieldy to work with, while their Fourier transforms are sums of linear polynomials in $|x|$ and Dirac delta functions. Moreover, Gallagher \cite{Gallagher} noted that a correspondence exists between admissible test functions $\phi$ and square-integrable functions. Namely, it follows by the Ahiezer and Paley-Wiener theorems that $\phi$ is a test function with $\supp \widehat \phi \subseteq [-1, 1]$ if and only if there exists $f \in L^2 [-1/2, 1/2]$ such that
+	\begin{equation}
+		\widehat \phi (x) = (f * \breve{f} ) (x),
+	\end{equation}	
+where
+	\begin{equation}
+		\breve{f} (x) = \close{f( - x)}. 
+	\end{equation}	
+Thus rather than minimizing a functional over test functions, we can instead view the problem as minimizing a functional $\tilde R_{G, \psi}$ on a subset of $L^2 [-1/2, 1/2]$, defined by 
+	\begin{equation}
+		\tilde R_{G, \psi} (f) := \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy. \label{eq:originalfunctional}
+	\end{equation}
+This perspective gives access to more functional analytic tools, namely Fredholm theory. Motivated by our earlier remarks on the Fourier transform, we apply the Plancharel theorem to write
+	\begin{equation}
+		\tilde R_{G, \psi} (f) = \frac{1}{\phi(0)} \int_{-1}^1 \widehat \phi (x) \tilde V_{G, \psi} (x) dx, 
+	\end{equation}	
+where we have a weight function $\tilde V_{G, \psi}$ given by 
+	\begin{equation}
+		\tilde V_{G, \psi} (x) = \frac{1}{\psi(0)}\int_{-1}^1 \widehat \psi (y) \widehat{W_{2, G}} (y) dy. \label{eq:vtilde}
+	\end{equation}	
+In the 1-level case, the role of the weight function is played by the Fourier transforms of the 1-level distributions (\ref{eq:nlevelSOeven}) - (\ref{eq:nlevelSymp}), which take the form $\delta + m_G$. Analogously, following calculations due to Hughes and Miller \cite{HughesMiller}, for each of the classical compact groups the weight function (\ref{eq:vtilde}) takes the form
+	\begin{equation}
+		\tilde V_{G, \psi} (x) =  c_{G, \psi} \delta(x) + \tilde m_{G, \psi} (x) \mathbb 1_{[-1, 1]} (x) \label{eq:vtilde2}
+	\end{equation}	
+for constants $c_{G, \psi} \in \R$ and kernel $\tilde m_{G, \psi} \in L^2 [-1, 1]$ depending on our choice of initial test function $\psi$ and the classical compact group $G$, namely
+	\begin{equation}
+		c_{G, \psi} = \frac{\widehat \psi (0)}{\psi (0)} + 
+			\begin{cases}
+				- \frac12, 		&\text{if } G = \Symp,\\
+				0, 				&\text{if } G = \Unit, \\
+				\frac12,			&\text{if } G = \SpOrthE, \SpOrthO, \Orth,
+			\end{cases}
+		\end{equation}
+and
+\begin{align}
+	\tilde m_{\SpOrthE, \psi} (x) 
+	    &=\frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} + \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)-\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)},\\
+	\tilde  m_{\SpOrthO, \psi} (x) 
+        &= \frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{3}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)+\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)},\\
+	\tilde m_{\Orth, \Psi}(x)
+		&= \frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1),\\
+	\tilde m_{\Unit, \psi} (x)
+	    &=	\frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1),\\
+	\tilde m_{\Symp, \psi} (x)
+	    &=-\frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)+\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)}.		
+\end{align}
+To complete the analogy with the 1-level case, we consider the normalized functional, weight function and kernel:
+	\begin{align}
+		R_{G, \psi} (f) &:= \frac{\tilde R_{G, \psi}(f)}{c_{G, \psi}}, \label{eq:quadraticform} \\
+		V_{G, \psi} (x) &:= \frac{\tilde V_{G, \psi} (x)}{c_{G, \psi}}, \\
+		m_{G, \psi} (x) &:= \frac{\tilde m_{G, \psi} (x)}{c_{G, \psi}}. 
+	\end{align}	
+Consider the compact self-adjoint operator $K_{G, \psi} :L^2 [-1/2, 1/2] \to L^2 [-1/2, 1/2]$ (see Section 6.6 of \cite{RudnickSarnak}) defined by 
+	\begin{equation}
+		(K_{G, \psi} f) (x) := \int_{-1/2}^{1/2} m_{G, \psi} (x - y) f(y) dy. 
+	\end{equation}	
+Then the optimization problem (\ref{eq:2minimize}) is equivalent to the minimization of the quadratic form
+    \begin{equation}
+    		R_{G, \psi} (f) = \frac{\langle (I + K_{G, \psi})f, f \rangle}{|\langle f, 1 \rangle|^2} 
+    	\end{equation}	
+subject to the linear constraint $\langle f, 1 \rangle \neq 0$. We know $R_{G, \psi} \geq 0$, which implies $I + K_{G, \psi}$ is positive definite. If $I + K_{G, \psi}$ is non-singular, that is, $-1$ is not an eigenvalue of $K_{G, \psi}$, then it follows from the Fredholm alternative that there exists a unique $g_{G, \psi} \in L^2 [-1/2, 1/2]$ satisfying the integral equation
+	\begin{equation}
+			(I + K_{G, \psi}) (g_{G, \psi}) (x) = g_{G, \psi} (x) + \int_{-1/2}^{1/2} m_{G, \psi} (x - y) g_{G, \psi} (y) dy = 1 \label{eq:fredholm}
+	\end{equation}	
+for $x \in [-1/2, 1/2]$, and by Proposition A.1 of \cite{ILS}, 
+	\begin{equation}
+		\inf_f R_{G, \psi} (f) = \frac{1}{\langle 1, g_{G, \psi} \rangle}. \label{eq:ILSminimum}
+	\end{equation}	
+Equation (\ref{eq:thmidentity})	in Theorem \ref{thm:optimalgpsi} follows directly from (\ref{eq:originalfunctional}), (\ref{eq:quadraticform}) and (\ref{eq:ILSminimum}). It remains to check the following lemma:
+
+\begin{lemma}
+	$I + K_{G, \psi}$ is non-singular, that is, $-1$ is not an eigenvalue of $K_{G, \psi}$. \label{lem:nonsingular}
+\end{lemma}
+
+\begin{proof}
+	Let $f \in L^2 [-1/2, 1/2]$ such that $K_{G, \psi} f = -f$, i.e.,
+		\[ 0 = f(x) + \int_{-1/2}^{1/2} m_{G, \psi} (x - y) f(y) dy. \]
+	This is a Fredholm equation of the second kind, and the unique continuous solution is given by the corresponding Liouville-Neumann series, which, in this case, is the constant zero function. On the other hand, $m_{G, \psi}$ is uniformly continuous on $[-1, 1]$, so for fixed $\epsilon > 0$, there exists $\delta > 0$ witnessing the uniform continuity. Then 
+		\[ |f(x + h) - f(x)| \leq \int_{-1/2}^{1/2} |m_{G, \psi} (x + h - y) - m_{G, \psi}(x - y)| |f(y)| dy \leq \epsilon ||f||_{L^2} \]
+	whenever $|h| < \delta$. It follows that $f$ is continuous, so by uniqueness, $f = 0$. 	
+\end{proof}
+
+\begin{remark}
+	A similar argument shows that the solution $g_{G, \psi}$ to Equation (\ref{eq:fredholm}) is continuous. 
+\end{remark}
+
+\subsection{Solving a Fredholm integral equation with quadratic kernel} \label{sec:quadker}
+
+Let $\psi$ be as in (\ref{eq:fixedtest}), which has Fourier transform
+	\begin{equation}	
+		\widehat \psi (x) = (\mathbb 1_{[-1/2, 1/2]} * \mathbb 1_{[-1/2, 1/2]})(x) = (1 - |x|) \mathbb 1_{[-1, 1]} (x). 
+	\end{equation}	
+Not only is this the natural choice of fixed test function $\psi$, it also lends to an elegant derivation of the corresponding optimal $g_{G, \psi}$, as the kernels $m_{G, \psi}$ take the form of quadratic polynomials in $|x|$ on the interval $[-1, 1]$. Namely, 
+\begin{align}
+	m_{\SpOrthE, \psi} (x)
+		&= -\frac32 + \frac83 |x| - \frac23 x^2, \\
+	m_{\SpOrthO, \psi} (x) 
+		&= -\frac{5}{6} + \frac83 |x| - 2 x^2, \\
+	m_{\Orth, \psi} (x)
+		&= -\frac76 + \frac83 |x| -\frac43 2x^2, \\
+	m_{\Unit, \psi} (x)
+		&= -1 + 2 |x| - x^2,\\
+	m_{\Symp, \psi} (x)
+		&= - \frac52 + 8|x| - 6 x^2,
+\end{align}
+Prior experience with the analogous 1-level problem in \cite{ILS}, \cite{FreemanThesis} and \cite{FreemanMiller} suggests that $g_{G, \psi}$ takes the form of an even trigonometric polynomial. Indeed, not only does this hold in Theorem \ref{thm:optimalgpsi}, this holds in generality for Fredholm integral equation where the kernel is an even quadratic polynomial in $|x|$, as Lemma \ref{lem:nonsingular} relies only on uniform continuity of the kernel. 
+
+\begin{theorem}
+	Let $a, b, c \in \R$ with $b \geq 0$. The following Fredholm integral equation with quadratic kernel,
+		\begin{equation}
+			1 = g(x) + \int_{-1/2}^{1/2} (a + b |x - y| + c |x - y|^2) g(y) dy, 	\label{eq:fredholmquad}
+		\end{equation}
+	admits the unique continuous solution
+		\begin{equation}
+			g(x) = \frac{6b^{3/2} (b + c) \cos(\sqrt{2b} x) - 6 \sqrt{2} b c \sin(\sqrt{b/2})}{6 \sqrt{b} (b + c)^2 \cos(\sqrt{b/2}) + \sqrt{2} (6 a b^2 + 3b^3 + 3b^2 c + b c (c - 12) - 6c^2) \sin (\sqrt{b/2})}. \label{eq:quadsol}
+		\end{equation}\label{thm:quadratic}	
+\end{theorem}
+
+Theorem \ref{thm:optimalgpsi} follows as an immediate corollary. We prove Theorem \ref{thm:quadratic} following a differential equations argument due to Freeman and Miller. Observe that the left-hand side of Equation (\ref{eq:fredholmquad}) is constant, so derivatives of the expression on the right vanish. Assuming $g$ is sufficiently smooth, we differentiate under the integral sign to obtain
+\begin{align*}
+		\frac{d}{dx}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+			&=\frac{d}{dx} \left( \int_{-1/2}^x (x - y) g(y) dy +  \int_x^{1/2} (y - x) g(y) dy \right)\\
+			&= \int_{-1/2}^x g(y) dy - \int_x^{1/2} g(y) dy, \\
+		\frac{d^2}{dx^2}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+			&= 2g(x),
+	\end{align*}
+and
+	\begin{align*}
+		\frac{d}{dx} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&= \int_{-1/2}^{1/2} (2x - 2y) g(y) dy, \\
+		\frac{d^2}{dx^2} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&= 2 \int_{-1/2}^{1/2} g(y) dy.
+	\end{align*}
+We thereby obtain the corresponding system of linear homogeneous differential equations,
+	\begin{align}
+		1
+			&= g(0) + a \int_{-1/2}^{1/2} |y| g(y) dy, \label{eq:diff1}\\
+		0 
+			&= g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy, \label{eq:diff2} \\
+		0
+			&= g''' (x) + 2b g'(x).		\label{eq:diff3}	
+	\end{align}
+Equation (\ref{eq:diff1}) is exactly (\ref{eq:fredholmquad}) taking $x = 0$. We obtain equations (\ref{eq:diff2}) and (\ref{eq:diff3}) by differentiating (\ref{eq:fredholmquad}) under the integral sign twice and thrice respectively. Assuming $g$ is even, solutions to equation (\ref{eq:diff3}) take the form $g(x) = A \cos(\sqrt{2b} x) + C$ for some constants $A, C \in \R$. Substituting into equation (\ref{eq:diff2}) reduces these two degrees of freedom to one, 
+	\begin{align}
+		0 
+			&= g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy = 2C (b + c) + \frac{4A c}{\sqrt{2b}} \sin\left( \frac{\sqrt{2b}}{2} \right).
+	\end{align}
+	This shows that
+	\begin{equation}
+		 g(x) = A\cos(\sqrt{2b} x) - A\frac{2c}{b + c} \frac{\sin\left( \sqrt{b/2} \right)}{\sqrt{2b}}. 
+	\end{equation} 
+	Substituting the above into (\ref{eq:diff1}) allows us to solve for $A$ explicitly, which completes the derivation of (\ref{eq:quadsol}). \hfill $\Box$
+
+\begin{remark}
+    The same differential equations method can be applied for kernels which take the form of of higher order polynomials in $|x|$ on $[-1, 1]$, that is, $m(x) = p(x)$ for some degree $n$ polynomial $p$. Future approaches to the optimization problem may want to consider optimizing over fixed test functions $\psi$ which produce kernels of such form. 
+\end{remark}
+%	If the kernel $m(x)=\sum_{i=0}^{n}d_i|x|^i$ is a polynomial in $|x|$, then the integral equation $g(x) - \int_{-1/2}^{1/2} m(x-y)g(y) dy = 1$ implies a homogeneous linear differential equation $g^{(n+1)}-2\sum_{j = 0}^{\lfloor\frac{n-1}{2}\rfloor}(2j+1)!d_{2j+1}g^{(n-(2j+1))} = 0$. For example, we might choose $\widehat{\psi} = f(x) * f(x)$ where $f(x) = (1 + ax^2)\mathbb{1}_{[-1/2,1/2]}$ and find the optimal test function for various $a\in\mathbb{R}$. 

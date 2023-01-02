@@ -1,0 +1,95 @@
+\subsection{$n$-level density}
+
+Let $\cF$ be a family of cuspidal newforms, and to each $f \in \cF$ we associate the $L$-function 
+    \[ L(s, f) = \sum_{n = 1}^\infty \frac{a_{n, f}}{n^s}. \]
+We assume that the Riemann hypothesis holds for each $L(s, f)$ and for all Dirichlet $L$-functions, that is, we can enumerate the non-trivial zeros of $L(s, f)$ by 
+    \[ \rho^{(j)}_f = \frac12 + i \gamma_f^{(j)} \]
+for $\gamma_f^{(j)} \in \R$ increasingly ordered and centered about zero. By arguments due to Riemann, the number of zeros with $|\gamma_f^{(j)}|$ bounded by an absolute large constant is of order $\log c_f$ for some constant $c_f > 1$ known as the \emph{analytic conductor}. It is of interest to study the statistics of these "low-lying" zeros of $L(s, f)$, and to this end \cite{ILS} introduced the \emph{$n$-level density},
+\begin{equation}
+    D_n (f; \Phi) := \sum_{\substack{j_1, \dots, j_n \\ j_i \neq \pm j_k}} \Phi \left( \frac{\log c_f}{2\pi} \gamma_f^{(j_1)}, \dots, \frac{\log c_f}{2\pi} \gamma_f^{(j_n)} \right)	\label{def:density}
+\end{equation}
+for \emph{test functions} $\Phi: \R^n \to \R$, which we take to be non-negative even Schwartz class functions with compactly supported Fourier transform and $\Phi(0) > 0$. In practice the sum (\ref{def:density}) is impossible to evaluate asymptotically, since by choice of $\Phi$ it essentially captures only a bounded number of zeros. Instead we study averages over finite subfamilies $\cF (Q) := \{ f \in \cF : c_f \leq Q \}$, namely
+\begin{equation} 
+    \EE (D_n (f; \Phi), Q) := \frac{1}{\# \cF (Q)} \sum_{f \in \cF (Q)} D(f; \Phi).
+\end{equation}
+If $\cF$ is a complete family of cuspidal newforms in a spectral sense, there exists a distribution $W_{n, \cF}$ such that 
+\begin{equation}
+    \lim_{Q \to \infty} \EE (D_n (f; \Phi), Q) = \frac{1}{\Phi(0, \dots, 0)} \int_{\R^n} \Phi(x_1, \dots, x_n) W_{n, \cF} (x_1, \dots, x_n) dx_1 \cdots dx_n.
+\end{equation}
+Katz and Sarnak conjectured that $W_{n, \cF}$ depends on a corresponding symmetry group $G(\cF)$, the scaling limit of one of the classical compact groups, so for the remainder we shall write $W_{n, G}$ in place of $W_{n, \cF}$. 
+
+Define
+	\[ K(y) := \frac{\sin (\pi y)}{\pi y}, \qquad K_\epsilon (x, y) := K(x - y) + \epsilon K(x + y) \]
+for $\epsilon = 0, \pm 1$. The corresponding $n$-level densities, as referenced in \cite{HughesMiller} and derived in \cite{KatzSarnak}, have the following distinct closed form determinant expansions, 
+	\begin{align}
+		W_{n, \SpOrthE} (x) 	
+			&= \det \left( K_1 (x_i, x_j) \right)_{i, j \leq n}, \label{eq:nlevelSOeven} \\
+		W_{n, \SpOrthO} (x)
+			&= \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n} + \sum_{k = 1}^n \delta (x_k) \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \neq k},  \\
+		W_{n, \Orth} (x)
+			&= \frac12 W_{n, \SpOrthE} (x) + \frac12 W_{n, \SpOrthO} (x), \\
+		W_{n, \Unit} (x)
+			&= \det \left( K_0 (x_i, x_j) \right)_{i, j, \leq n}, \\
+		W_{n, \Symp} (x)			
+			&=\det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n} \label{eq:nlevelSymp}. 
+	\end{align}
+
+\subsection{Main result}
+
+It is discussed in \cite{FreemanMiller} and \cite{ILS} that the 1-level density gives estimates on the average order of vanishing of $L$-functions at the central point in a family. Here we deal with the 2-level densities, which has the advantage of giving better estimates on higher vanishing at the central point. Writing $r_f$ for the order of the zero of $L(s, f)$ at $s = 1/2$ and $\Prob (m) := \Prob (f \in \cF : r_f = m)$, we have
+\begin{align}
+    \sum_{m = 0}^\infty m (m - 1) \Prob (m) \ \leq \ \frac{1}{\Phi(0,0)} \int_{\R^2} \Phi(x, y) W_{2, \cF} (x, y) dx dy. \label{eq:boundorder}
+\end{align}
+It is therefore of interest to choose $\Phi$ optimally to obtain the best bound on the left-hand side of (\ref{eq:boundorder}). Rather than minimizing over test functions of two variables, we instead fix a single variable test function $\psi$ and, imposing the restriction $\Phi(x, y) = \phi(x) \psi (y)$, minimize over single variable test functions $\phi$ with $\supp \widehat \phi \subseteq [-1, 1]$. For our fixed $\psi$, we consider
+	\begin{equation}
+		\psi(y) = \left( \frac{\sin (\pi y)}{\pi y} \right)^2.\label{eq:fixedtest}
+	\end{equation}	
+Iwaniec, Luo and Sarnak \cite{ILS} showed that the optimal test functions with Fourier transforms supported in $[-1, 1]$ for the 1-level densities are exactly scalar multiples of $\psi$, making it the natural choice of fixed test function. Our main result is to solve this restricted optimization problem for $\psi$ as defined above. 
+
+\begin{theorem}
+	Let $\psi$ be as in (\ref{eq:fixedtest}). For each of the classical compact groups $G = \SpOrthE, \SpOrthO, \Unit, \Orth,$ and $\Symp$, there exists an optimal square integrable function $g_{G, \psi} \in L^2 [-1/2, 1/2]$ and constant $c_{G, \psi}$ such that 
+		\begin{equation}
+			\frac{c_{G, \psi}}{\int_{-1/2}^{1/2} g(x) dx} = \inf_\phi  \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy, \label{eq:thmidentity} 	
+		\end{equation}	
+	where the infimum is taken over test functions $\phi$ with Fourier transform satisfying $\supp \widehat \phi \subseteq [-1, 1]$. The constants and optimal square integrable functions are given by
+		\begin{equation}
+			c_{G, \psi} = 
+				\begin{cases}
+					\frac12, 		&\text{if } G = \Symp,\\
+					1, 				&\text{if } G = \Unit, \\
+					\frac32,			&\text{if } G = \SpOrthE, \SpOrthO, \Orth,
+				\end{cases}
+		\end{equation}
+	and
+		\begin{align}
+			g_{\SpOrthE, \psi} (x) 
+				&= \frac{216 \cos(4x/\sqrt 3) + 36 \sqrt 3 \sin(2/\sqrt 3)}{162 \cos(2/\sqrt 3) - 5 \sqrt{3} \sin(2/\sqrt 3)}, \\
+			g_{\SpOrthO, \psi} (x) &= \frac{8 \cos (4 x/\sqrt{3})+12 \sqrt{3} \sin(2/\sqrt{3})}{11 \sqrt{3} \sin (2/\sqrt{3})+2 \cos(2/\sqrt{3})}, \\
+			g_{\Unit, \psi} (x)
+				&= \frac{6 \cos (2x) + 6 \sin(1)}{3 \cos(1) + 4 \sin(1)}, \\
+			g_{\Orth, \psi} (x)
+				&=  \frac{36\cos(4x/\sqrt{3})+18\sqrt{3} \sin(2/\sqrt{3})}{18 \cos(2/\sqrt{3}) + 13 \sqrt{3} \sin(2/\sqrt{3})}, \\
+			g_{\Symp, \psi} (x)
+				&= \frac{8 \cos (4x) + 12 \sin(2)}{2 \cos (2) + 3 \sin(2)}.
+		\end{align}	
+	Additionally, the optimal test function $\phi_{G, \psi}$ realizing the infimum in (\ref{eq:thmidentity}) satisfies $\widehat{\phi_{G, \psi}} = g_{G, \psi} * g_{G, \psi}$. 
+		\label{thm:optimalgpsi}
+\end{theorem}
+The test function $\psi$ is used in Section 1 of \cite{ILS} to obtain naive bounds on the average order of vanishing. Similarly, we can compute naive bounds for the 2-level densities by taking $\Phi (x, y) = \psi(x) \psi(y)$. Table \ref{tab:bounds} shows that the bounds derived from Theorem \ref{thm:optimalgpsi} significantly improve the naive bounds. 
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|l||c|c|}
+			\hline
+			\textbf{Family} & \textbf{Naive bounds} & \textbf{Closed form of (\ref{eq:thmidentity})} \\ \hline
+			$\SpOrthE$ & $\frac{5}{12} \approx 0.416666$ & $\frac{1}{96} \left(54 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)-5\right) \approx 0.378448$ \\\hline
+			$\SpOrthO$ & $\frac{13}{12} \approx 1.083333$ & $\frac{1}{32} \left(33+2 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)\right) \approx 1.07909$ \\
+			\hline
+			$\Orth$ & $\frac34 \approx 0.75$ & $\frac{1}{24} \left(13+6 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)\right)\approx 0.733014 $\\\hline
+			$\Unit$ & $\frac12 \approx 0.5$ & $\frac{1}{12} (4+3 \cot (1)) \approx 0.493856$\\\hline
+			$\Symp$ & $\frac{1}{12} \approx 0.083333$ & $\frac{1}{32} (3+2 \cot (2)) \approx 0.0651464$\\\hline
+		\end{tabular}
+		\caption{Comparing naive bounds taking $\phi = \psi$ with the optimal value from (\ref{eq:thmidentity}) for each of the classical compact groups.} \label{tab:bounds}
+	\end{center}
+\end{table}
+

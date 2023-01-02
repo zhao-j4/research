@@ -1,0 +1,801 @@
+\documentclass[12pt, reqno]{amsart}
+
+\usepackage{amsfonts,latexsym,amsthm,amssymb,amsmath,amscd,euscript,bm}
+\usepackage[sc]{mathpazo}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+% sets numbering of enumerate to a, b, c, ...
+\renewcommand{\theenumi}{\alph{enumi}}
+
+% equation label with section number
+\numberwithin{equation}{section}
+
+% Theorems, propositions, etc.
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{claim}{Claim}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+\newcommand{\nc}{\newcommand}
+\nc{\on}[1]{\operatorname{#1}}
+
+\nc{\R}{\mathbb R}
+\nc{\C}{\mathbb C}
+\nc{\Q}{\mathbb Q}
+\nc{\Z}{\mathbb Z}
+\nc{\N}{\mathbb N}
+\nc{\HH}{\mathbb H}
+\nc{\DD}{\mathbb D}
+\nc{\TT}{\mathbb T}
+\nc{\EE}{\mathbb E}
+
+\nc{\cT}{\mathcal T}
+\nc{\cP}{\mathcal P}
+\nc{\cM}{\mathcal M}
+\nc{\cC}{\mathcal C}
+\nc{\cB}{\mathcal B}
+\nc{\cG}{\mathcal G}
+\nc{\cA}{\mathcal A}
+\nc{\cS}{\mathcal S}
+\nc{\cF}{\mathcal F}
+\nc{\cL}{\mathcal L}
+\nc{\cR}{\mathcal R}
+
+\nc{\frakI}{\mathfrak I}
+
+\nc{\diam}{\operatorname{diam}}     % diameter of a set
+\nc{\osc}{\operatorname{osc}}       % oscillation of a function
+\nc{\inter}{\mathrm{o}}             % interior of a set
+\nc{\close}[1]{\overline{#1}}       % closure of a set
+\nc{\supp}{\operatorname{supp}}     % support of a function
+\nc{\Prob}{\operatorname{Pr}}       % probability
+
+\nc{\Symp}{\mathsf{Sp}}
+\nc{\SpOrthO}{\mathsf{SO(odd)}}
+\nc{\SpOrthE}{\mathsf{SO(even)}}
+\nc{\Orth}{\mathsf O}
+\nc{\Unit}{\mathsf U}
+\nc{\UnitSp}{\mathsf{USp}}
+
+% Why would you ever use \epsilon
+\renewcommand{\epsilon}{\varepsilon}
+
+
+% Title: change problem set number as needed
+\title
+{
+	\textsc{Determining optimal test functions for $2$-level densities}
+}
+
+\author{El\.zbieta Bo\l dyriew, Fangu Chen, Charles Devlin VI, Steven J. Miller, Jason Zhao}
+\date{\today}
+
+\thanks{This research was supported by NSF grant DMS1947438 and Williams College. The fourth listed author was supported by NSF grant DMS1561945. We also thank John Haviland, Fernando Trejos Su\'arez and Jiahui Yu for their comments on the problem during our many fruitful conversations.}
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\thispagestyle{empty}
+\begin{abstract}
+	Katz and Sarnak conjectured a
+correspondence between the $n$-level density statistics of zeros from
+families of $L$-functions
+with eigenvalues from random matrix ensembles, and in many cases the sums of smooth test functions, whose Fourier transforms are
+finitely supported over scaled zeros in a family, converge to an integral of
+the test function against a density $W_{n, G}$ depending on the
+symmetry $G$ of the family (unitary, symplectic or orthogonal). This integral bounds the average order of vanishing at the central point of the corresponding family of $L$-functions. 
+
+We can obtain better estimates on this vanishing in two ways. The first is
+to do more number theory, and prove results for larger $n$ and greater
+support; the second is to do functional analysis and obtain better test
+functions to minimize the resulting integrals. We pursue the latter here
+when $n=2$, minimizing  
+	\[ \frac{1}{\Phi(0, 0)} \int_{{\mathbb R}^2} W_{2,G} (x, y) \Phi(x, y) dx dy \] 
+over test functions $\Phi : {\mathbb R}^2
+\to [0, \infty)$ with compactly supported Fourier transform. We study a
+restricted version of this optimization problem, imposing that our test
+functions take the form $\phi(x) \psi(y)$ for some fixed admissible $\psi(y)$ and
+$\supp{\widehat \phi} \subseteq [-1, 1]$. Extending results from the 1-level case, namely the functional analytic arguments of Iwaniec, Luo and Sarnak and the differential equations method introduced by Freeman and Miller, we explicitly solve for the optimal $\phi$ for appropriately chosen fixed test function $\psi$. We conclude by discussing further improvements on estimates by the method of iteration.
+\end{abstract}
+
+\tableofcontents
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Background}
+
+The location and distribution of zeros of $L$-functions play a central role in numerous number theory problems. In many situations, the more one knows about their spacing, the stronger results one has. For example, the fact that the Riemann zeta function and Dirichlet $L$-functions do not vanish on the line ${\Re}(s) = 1$ yields the Prime Number Theorem, and that for a given modulus $q$ each arithmetic progression that can contain infinitely many primes does so, and to first order they all have the same number of primes up to $x$. If the Generalized Riemann Hypothesis is true, we can improve the error terms in these counts to of size $x^{1/2 + \epsilon}$ for any $\epsilon$ (with a little work we can replace $x^\epsilon$ with a power of $\log x$); see for example  \cite{Da,IK}.
+
+Next, if the zeros of Dirichlet $L$-functions are linearly independent over $\Q$ (the Grand Simplicity Hypothesis), then Rubinstein and Sarnak \cite{RubSa} proved Chebyshev's Bias, which quantifies how often up to $x$ each ordering of the possible residue classes modulo $q$ occurs. Assuming GRH, the non-trivial zeros of $L$-functions lie on the line ${\rm Re}(s) = 1/2$. There are many models that predict their behavior, especially Random Matrix Theory which states that families of $L$-functions as the conductors tend to infinity are modeled by ensembles of matrices (unitary, orthogonal and symplectic) with size tending to infinity; see in particular \cite{BFMT-B, bogo, BogoKeat, Con, CFKRS, DHKMS1, DHKMS2, FM, Ha, KatzSarnak, KatzSarnak2, KeSn1, KeSn2, KeSn3}. Some of the most studied statistics are the $n$-level correlations, $n$-level density and spacings between zeros, and excellent agreement has been seen: \cite{AAILMZ, AM, CS, DM1, DM2, FiM, FI, Gallagher, Gao, GK, GJMMPP, Gu, Hej, HM, HR1, HR2, ILS, LM, Mil1, Mil2, Mil3, Mil4, MilMo, MilPe, Mon, Od1, Od1, OS1, OS2, RR, Ro, Rub, RudnickSarnak, ShTe, Ya, Yo1, Yo2} (one could also look at moments and central values, and the models' predictions fair well here; for other approaches see \cite{CFZ1, CFZ2, GHK}). There are many reasons for interest in what happens on the critical line, ranging from the existence of many small gaps (relative to the average spacing) translates to bounds for the class number problem \cite{CI} to the famous Birch and Swinnerton-Dyer Conjecture equating the order of vanishing of elliptic curve $L$-functions to the order of the Mordell-Weil group of rational points \cite{BSD1, BSD2, Gol}.
+
+The last is the starting point for our investigations: given a family of $L$-functions ordered by conductor, what fraction with conductor at most a fixed size (tending to infinity) vanish to a given order at the central point? As remarked, for elliptic curves this is conjecturally related to the group of rational solutions. In this paper we use the $n$-level density of Katz-Sarnak \cite{KatzSarnak, KatzSarnak2}, applied to an even, non-negative Schwartz test function to obtain upper bounds. This approach was pioneered in \cite{ILS} (see in particular Appendix A), and extended further for the 1-level density in by Freeman \cite{FreemanThesis, FreemanMiller}. 
+
+There are many advantages to studying the $n$-level density in general, and the 2-level (which is our focus) in particular; we define these in the next subsection, and just state the applications. First, as Miller showed in his thesis \cite{Mil1}, while the three orthogonal groups have indistinguishable support for test functions whose Fourier transforms are supported in $(-1,1)$, the 2-level densities are distinct from each other (and the symplectic and unitary cases) for arbitrarily small support. Next, the $n$-level density yields results of the following form (see \cite{HM}): there are constants $c_n$ such that the probability of at least $r$ zeros at the central point is at most $c_n / r^n$; equivalently, the probability of fewer than $r$ zeros at the central point is at least $1 - c_n / r^n$. Unfortunately as $n$ increases in practice the support where we can prove results decreases, and thus the constants $c_n$ grow with $n$ and the results are initially \emph{worse} for small $r$, though eventually the greater decay kicks in and better results than those from the 1-level are obtained.
+
+Below we provide details on just how results on the distribution of zeros near the central point (the $n$-level density) translate to bounds on the order of vanishing. The focus of our work is to provide the best possible upper bounds. This leads to a functional analysis problem, involving the optimization of integrals involving the even Schwartz test function.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{$n$-level density}
+
+Let $\cF$ be a family of cuspidal newforms, and to each $f \in \cF$ we associate the $L$-function
+    \[ L(s, f) \ = \  \sum_{n = 1}^\infty \frac{a_{n, f}}{n^s}. \]
+We assume that the Riemann hypothesis holds for each $L(s, f)$ and for all Dirichlet $L$-functions, that is, we can enumerate the non-trivial zeros of $L(s, f)$ by
+    \[ \rho^{(j)}_f \ = \  \frac12 + i \gamma_f^{(j)} \]
+for $\gamma_f^{(j)} \in \R$ increasingly ordered and centered about zero. By arguments due to Riemann, the number of zeros with $|\gamma_f^{(j)}|$ bounded by an absolute large constant is of order $\log c_f$ for some constant $c_f > 1$ known as the \emph{analytic conductor}. It is of interest to study the statistics of these "low-lying" zeros of $L(s, f)$, and to this end Katz and Sarnak \cite{KatzSarnak} introduced the \emph{$n$-level density},
+\begin{equation}
+    D_n (f; \Phi) \ := \  \sum_{\substack{j_1, \dots, j_n \\ j_i \neq \pm j_k}} \Phi \left( \frac{\log c_f}{2\pi} \gamma_f^{(j_1)}, \dots, \frac{\log c_f}{2\pi} \gamma_f^{(j_n)} \right)	\label{def:density}
+\end{equation}
+for \emph{test functions} $\Phi: \R^n \to \R$, which we take to be non-negative even Schwartz class functions with compactly supported Fourier transform and $\Phi(0) > 0$. In practice the sum (\ref{def:density}) is impossible to evaluate asymptotically, since by choice of $\Phi$ it essentially captures only a bounded number of zeros. Instead we study averages over finite subfamilies $\cF (Q) := \{ f \in \cF : c_f \leq Q \}$, namely
+\begin{equation}
+    \EE (D_n (f; \Phi), Q) \ := \  \frac{1}{\# \cF (Q)} \sum_{f \in \cF (Q)} D(f; \Phi). \label{eq:averages}
+\end{equation}
+If $\cF$ is a complete family of cuspidal newforms in a spectral sense, there exists a distribution $W_{n, \cF}$ such that
+\begin{equation}
+    \lim_{Q \to \infty} \EE (D_n (f; \Phi), Q) \ = \   \int_{\R^n} \Phi(x_1, \dots, x_n) W_{n, \cF} (x_1, \dots, x_n) dx_1 \cdots dx_n.
+\end{equation}
+Katz and Sarnak \cite{KatzSarnak, KatzSarnak2} conjectured that $W_{n, \cF}$ depends on a corresponding symmetry group $G(\cF)$, the scaling limit of one of the classical compact groups, so for the remainder we shall write $W_{n, G}$ in place of $W_{n, \cF}$.
+
+Define
+	\[ K(y) \ := \  \frac{\sin (\pi y)}{\pi y}, \qquad K_\epsilon (x, y) \ := \  K(x - y) + \epsilon K(x + y) \]
+for $\epsilon = 0, \pm 1$. The corresponding $n$-level densities have the following distinct closed form determinant expansions \cite{HughesMiller, KatzSarnak},
+	\begin{align}
+		W_{n, \SpOrthE} (x) 	
+			&\ = \  \det \left( K_1 (x_i, x_j) \right)_{i, j \leq n}, \label{eq:nlevelSOeven} \\
+		W_{n, \SpOrthO} (x)
+			&\ = \  \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n} + \sum_{k  =  1}^n \delta (x_k) \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \neq k},  \\
+		W_{n, \Orth} (x)
+			&\ = \  \frac12 W_{n, \SpOrthE} (x) + \frac12 W_{n, \SpOrthO} (x), \\
+		W_{n, \Unit} (x)
+			&\ = \  \det \left( K_0 (x_i, x_j) \right)_{i, j, \leq n}, \\
+		W_{n, \Symp} (x)			
+			&\ = \ \det \left( K_{-1} (x_i, x_j) \right)_{i, j, \leq n} \label{eq:nlevelSymp}.
+	\end{align}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Main result}
+
+It is discussed in \cite{FreemanMiller} and \cite{ILS} that the 1-level density gives estimates on the average order of vanishing of $L$-functions at the central point in a family. Here we deal with the 2-level densities, which has the advantage of giving better estimates on higher vanishing at the central point. Let $\Prob (m) := \Prob (f \in \cF : r_f = m)$, where $r_f$ is the order of the zero of $L(s, f)$ at $s = 1/2$. Considering (\ref{eq:averages}) for $n = 2$ and taking only terms with $\gamma_f^{(j_1)} = \gamma_f^{(j_2)} = 0$ gives the bound
+\begin{align}
+    4\sum_{m = 1}^\infty \left(m (m - 1) \Prob (2m) + m^2 \Prob(2m + 1) \right) \ \leq \ \frac{1}{\Phi(0,0)} \int_{\R^2} \Phi(x, y) W_{2, G} (x, y) dx dy. \label{eq:boundorder}
+\end{align}
+It is therefore of interest to choose $\Phi$ optimally to obtain the best bound on the left-hand side of (\ref{eq:boundorder}). Rather than minimizing over test functions of two variables, we instead fix a single variable test function $\psi$ and, imposing the restriction $\Phi(x, y) = \phi(x) \psi (y)$, minimize over single variable test functions $\phi$ with $\supp \widehat \phi \subseteq [-1, 1]$. For our fixed $\psi$, we consider
+	\begin{equation}
+		\psi(y) \ = \  \left( \frac{\sin (\pi y)}{\pi y} \right)^2.\label{eq:fixedtest}
+	\end{equation}	
+It follows from Corollary A.2 in Appendix A of \cite{ILS} that the optimal test functions with Fourier transforms supported in $[-1, 1]$ for the 1-level densities are exactly scalar multiples of $\psi$, making it the natural choice of fixed test function. Our main result is to solve this restricted optimization problem for $\psi$ as defined above.
+
+\begin{theorem}
+	Let $\psi$ be as in (\ref{eq:fixedtest}). For each of the classical compact groups $G = \SpOrthE, \SpOrthO, \Unit, \Orth,$ and $\Symp$, there exists an optimal square integrable function $g_{G, \psi} \in L^2 [-1/2, 1/2]$ and constant $c_{G, \psi}$ such that
+		\begin{equation}
+			\frac{c_{G, \psi}}{\int_{-1/2}^{1/2} g(x) dx} \ = \  \inf_\phi  \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy, \label{eq:thmidentity} \end{equation}	
+	where the infimum is taken over test functions $\phi$ with Fourier transform satisfying $\supp \widehat \phi \subseteq [-1, 1]$. The constants and optimal square integrable functions are given by
+		\begin{equation}
+			c_{G, \psi} \ = \
+				\begin{cases}
+					\frac12, 		&\text{if } G = \Symp,\\
+					1, 				&\text{if } G \ = \  \Unit, \\
+					\frac32,			&\text{if } G \ = \  \SpOrthE, \SpOrthO, \Orth,
+				\end{cases}
+		\end{equation}
+	and
+		\begin{align}
+			g_{\SpOrthE, \psi} (x)
+				&\ = \  \frac{216 \cos(4x/\sqrt 3) + 36 \sqrt 3 \sin(2/\sqrt 3)}{162 \cos(2/\sqrt 3) - 5 \sqrt{3} \sin(2/\sqrt 3)}, \\
+			g_{\SpOrthO, \psi} (x) &\ = \  \frac{8 \cos (4 x/\sqrt{3})+12 \sqrt{3} \sin(2/\sqrt{3})}{11 \sqrt{3} \sin (2/\sqrt{3})+2 \cos(2/\sqrt{3})}, \\
+			g_{\Unit, \psi} (x)
+				&\ = \  \frac{6 \cos (2x) + 6 \sin(1)}{3 \cos(1) + 4 \sin(1)}, \\
+			g_{\Orth, \psi} (x)
+				&\ = \   \frac{36\cos(4x/\sqrt{3})+18\sqrt{3} \sin(2/\sqrt{3})}{18 \cos(2/\sqrt{3}) + 13 \sqrt{3} \sin(2/\sqrt{3})}, \\
+			g_{\Symp, \psi} (x)
+				&\ = \  \frac{8 \cos (4x) + 12 \sin(2)}{2 \cos (2) + 3 \sin(2)}.
+		\end{align}	
+	Additionally, the optimal test function $\phi_{G, \psi}$ realizing the infimum in (\ref{eq:thmidentity}) satisfies $\widehat{\phi_{G, \psi}} = g_{G, \psi} * g_{G, \psi}$.
+		\label{thm:optimalgpsi}
+\end{theorem}
+The test function $\psi$ is used in Section 1 of \cite{ILS} to obtain naive bounds on the average order of vanishing. Similarly, we can compute naive bounds for the 2-level densities by taking $\Phi (x, y) = \psi(x) \psi(y)$. Table \ref{tab:bounds} shows that the bounds derived from Theorem \ref{thm:optimalgpsi} significantly improve the naive bounds.
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|l||c|c|}
+			\hline
+			\textbf{Family} & \textbf{Naive bounds} & \textbf{Closed form of (\ref{eq:thmidentity})} \\ \hline
+			$\SpOrthE$ & $\frac{5}{12} \approx 0.416666$ & $\frac{1}{96} \left(54 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)-5\right) \approx 0.378448$ \\\hline
+			$\SpOrthO$ & $\frac{13}{12} \approx 1.083333$ & $\frac{1}{32} \left(33+2 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)\right) \approx 1.07909$ \\
+			\hline
+			$\Orth$ & $\frac34 \approx 0.75$ & $\frac{1}{24} \left(13+6 \sqrt{3} \cot \left(\frac{2}{\sqrt{3}}\right)\right)\approx 0.733014 $\\\hline
+			$\Unit$ & $\frac12 \approx 0.5$ & $\frac{1}{12} (4+3 \cot (1)) \approx 0.493856$\\\hline
+			$\Symp$ & $\frac{1}{12} \approx 0.083333$ & $\frac{1}{32} (3+2 \cot (2)) \approx 0.0651464$\\\hline
+		\end{tabular}
+		\caption{Comparing naive bounds taking $\phi = \psi$ with the optimal value over support in $[-1, 1]$ from (\ref{eq:thmidentity}) for each of the classical compact groups.} \label{tab:bounds}
+	\end{center}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Applications to vanishing at the central point}
+If we instead consider (\ref{eq:averages}) for $n = 1$ and again take only the terms at the central point, we obtain the $1$-level analogue to (\ref{eq:boundorder}),
+\begin{equation}
+	\sum_{m = 1}^\infty m \Prob(m) \ \leq \ \frac{1}{\phi(0)} \int_\R \phi(x) W_{1, G} (x) dx dy \label{eq:boundorder1}.
+\end{equation}
+Comparing with (\ref{eq:boundorder}), we see that the $2$-level densities gives improvements on estimates for the average order of vanishing $m$ by a factor of $m$. For example, consider the orthogonal groups $\SpOrthE$, where the order at the central point is always even, and $\SpOrthO$, where the order is always odd. It was shown in Appendix A of \cite{ILS} that the optimal values for the right-hand side of (\ref{eq:boundorder1}) for test functions with Fourier transforms supported in $[-2, 2]$ are
+\begin{equation}
+	\inf_\phi \frac{1}{\phi(0)} \int_\R \phi(x) W_{1, G} (x) dx
+		=
+		\begin{cases}
+			\frac18 \left(3 + \cot\left(\frac14\right)\right) \approx 0.8645, 		&\text{if } G = \SpOrthE, \\
+			\frac18 \left(5 + \cot\left(\frac14\right)\right) \approx 1.1145, 		&\text{if } G = \SpOrthO.
+		\end{cases}	\label{eq:bounds1}
+\end{equation}
+Note that our bounds in Table \ref{tab:bounds} are better on the same order of magnitude as those above. Thus for $\SpOrthE$ and $\SpOrthO$ we immediately see improvements on upper bounds for order two and above. For higher orders such as $m = 2020, 2021$, we see significant improvements. We obtain the $1$-level bounds applying (\ref{eq:bounds1}) to (\ref{eq:boundorder1}), yielding
+\begin{align}
+	\Prob(2020) &\lessapprox 4.280 \cdot 10^{-4} \qquad \text{if } G = \SpOrthE,\\
+	\Prob(2021) &\lessapprox 5.515 \cdot 10^{-4} \qquad \text{if } G = \SpOrthO.
+\end{align}
+The $2$-level bounds are obtained using the optimal values listed in Table \ref{tab:bounds} and (\ref{eq:boundorder}), yielding
+\begin{align}
+	\Prob(2020) &\lessapprox 9.284\cdot 10^{-8} \qquad \text{if } G = \SpOrthE,\\
+	\Prob(2021) &\lessapprox 2.645 \cdot 10^{-7} \qquad \text{if } G = \SpOrthO.
+\end{align}
+Moreover, subtracting either (\ref{eq:boundorder}) or (\ref{eq:boundorder1}) from $\sum_m \Prob(m) = 1$ gives lower bounds on low orders of vanishing. In the case of the groups $\SpOrthE$ and $\SpOrthO$, we can also use the parity of the order for marginally better results. For $\SpOrthE$, the $1$-level and $2$-level lower bounds are respectively
+\begin{equation}
+	\sum_{m = 0}^k \Prob(2m) \geq 1 -  \frac{1}{(2k + 2)\phi(0)} \int_\R \phi(x) W_{1, \SpOrthE} (x) dx, \label{eq:lower1even}
+\end{equation}
+and
+\begin{equation}
+	\sum_{m = 0}^k \Prob(2m) \geq 1 -  \frac{1}{4 k(k + 1)\Phi(0, 0)} \int_{\R^2} \Phi(x, y) W_{2, \SpOrthE} (x, y) dx dy, \label{eq:lower2even}
+\end{equation}
+For $\SpOrthO$, the $1$-level and $2$-level lower bounds are respectively
+\begin{equation}
+	\sum_{m = 0}^k \Prob(2m + 1) \geq 1 -  \frac{1}{(2k + 3)\phi(0)} \int_\R \phi(x) W_{1, \SpOrthO} (x) dx, \label{eq:lower1odd}
+\end{equation}
+and
+\begin{equation}
+	\sum_{m = 0}^k \Prob(2m + 1) \geq 1 -  \frac{1}{4 (k + 1)^2\Phi(0, 0)} \int_{\R^2} \Phi(x, y) W_{2, \SpOrthO} (x, y) dx dy. \label{eq:lower2odd}
+\end{equation}
+For example, consider $k = 1$. Using the 1-level estimates (\ref{eq:lower1even}) and (\ref{eq:lower1odd}) with the values from (\ref{eq:bounds1}) yields the lower bounds
+\begin{align}
+	\Prob(0) + \Prob(2) &\gtrapprox 0.7839 \qquad \text{if } G = \SpOrthE,\\
+	\Prob(1) + \Prob(3) &\gtrapprox 0.7771 \qquad \text{if } G = \SpOrthO.
+\end{align}
+On the other hand, using the 2-level estimates (\ref{eq:lower2even}) and (\ref{eq:lower2odd}) and the optimal values from Table \ref{tab:bounds} yields the bounds
+\begin{align}
+	\Prob(0) + \Prob(2) &\gtrapprox 0.9842 \qquad \text{if } G = \SpOrthE \label{eq:lower2evenbound},\\
+	\Prob(1) + \Prob(3) &\gtrapprox 0.9701 \qquad \text{if } G = \SpOrthO.\label{eq:lower2oddbound}
+\end{align}
+We see that using the $2$-level estimates also provides significant improvements on the lower bound for low average order of vanishing at the central point compared to the $1$-level estimates from \cite{ILS} despite considering smaller support. A natural question to examine is how large of a support needs to be considered for the $1$-level estimates to provide better bounds on these low orders of vanishing than our $2$-level estimates for fixed support in $[-1, 1]$. Currently the largest support where the optimal test functions for the $1$-level densities are known is $[-3, 3]$, shown in \cite{FreemanMiller, FreemanThesis}. The corresponding optimal values follow from Corollary 1.2 of \cite{FreemanMiller} taking $\sigma = 1.5$, which yields
+\begin{equation}
+	\inf_\phi \frac{1}{\phi(0)} \int_\R \phi(x) W_{1, G} (x) dx
+		\approx
+		\begin{cases}
+			0.60363, 		&\text{if } G = \SpOrthE, \\
+			1.04304, 		&\text{if } G = \SpOrthO,
+		\end{cases}	\label{eq:jessebounds}
+\end{equation}
+where the infimum is taken over test functions with Fourier transforms supported in $[-3, 3]$. Applying the optimal values from (\ref{eq:jessebounds}) to the $1$-level estimates (\ref{eq:lower1even}) and (\ref{eq:lower1odd}), we obtain
+\begin{align}
+	\Prob(0) + \Prob(2) &\gtrapprox 0.84909 \qquad \text{if } G = \SpOrthE,\\
+	\Prob(1) + \Prob(3) &\gtrapprox 0.79139 \qquad \text{if } G = \SpOrthO.
+\end{align}
+These $1$-level bounds are still worse than our $2$-level bounds from (\ref{eq:lower2evenbound}) and (\ref{eq:lower2oddbound}), so it would seem that we need much larger support for the $1$-level estimate to surpass the $2$-level estimates for fixed support at these low orders of vanishing. Further, to date there are no families where the 1-level density has been done for support as large as $[-2, 2]$; the best we have is up to $[-2,
+2]$ (or a little more for cuspidal newforms if we assume Hypothesis S from
+\cite{ILS}); however, we do have the 2-level up to $[-1,1]$.
+This motivates further research into deriving optimal test functions for higher level densities and small support. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Proof of Theorem \ref{thm:optimalgpsi}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Functional analytic setup}
+
+Prior literature on the optimization problem, such as \cite{FreemanMiller} and \cite{FreemanThesis}, dealt with the 1-level densities following the functional analytic approach outlined in Appendix A of \cite{ILS}. We want to impose restrictions so that such an approach is amenable to the 2-level density optimization problem. To that end, we consider the optimization over test functions of the form $\Phi(x, y) = \phi(x) \psi(y)$ for fixed admissible $\psi(y)$ with $\supp \widehat\psi \subseteq [-1, 1]$. This reduces the problem to one analogous to the 1-level density, where we are optimizing over one-variable test functions. Explicitly, we want to compute
+\begin{equation}
+    \inf_\phi \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy \label{eq:2minimize}
+\end{equation}
+where the infimum is taken over test functions $\phi : \R \to \R$ with $\supp \widehat \phi \subseteq [-1, 1]$. Attacking the optimization problem via the Fourier transform is more promising than a direct approach. On the transform side, assumptions on the support reduce an integration over the entire plane $\R^2$ to an integration over the square $[-1, 1] \times [-1, 1]$, and the 2-level densities themselves are unwieldy to work with, while their Fourier transforms are sums of linear polynomials in $|x|$ and Dirac delta functions. Moreover, Gallagher \cite{Gallagher} noted that a correspondence exists between admissible test functions $\phi$ and square-integrable functions. Namely, it follows by the Ahiezer and Paley-Wiener theorems that $\phi$ is a test function with $\supp \widehat \phi \subseteq [-1, 1]$ if and only if there exists $f \in L^2 [-1/2, 1/2]$ such that
+	\begin{equation}
+		\widehat \phi (x) \ = \  (f * \breve{f} ) (x),
+	\end{equation}	
+where
+	\begin{equation}
+		\breve{f} (x) \ = \  \close{f( - x)}.
+	\end{equation}	
+Thus rather than minimizing a functional over test functions, we can instead view the problem as minimizing a functional $\tilde R_{G, \psi}$ on a subset of $L^2 [-1/2, 1/2]$, defined by
+	\begin{equation}
+		\tilde R_{G, \psi} (f) \ := \  \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, G} (x, y) dx dy. \label{eq:originalfunctional}
+	\end{equation}
+This perspective gives access to more functional analytic tools, namely Fredholm theory. Motivated by our earlier remarks on the Fourier transform, we apply the Plancharel theorem to write
+	\begin{equation}
+		\tilde R_{G, \psi} (f) \ = \  \frac{1}{\phi(0)} \int_{-1}^1 \widehat \phi (x) \tilde V_{G, \psi} (x) dx,
+	\end{equation}	
+where we have a weight function $\tilde V_{G, \psi}$ given by
+	\begin{equation}
+		\tilde V_{G, \psi} (x) \ = \  \frac{1}{\psi(0)}\int_{-1}^1 \widehat \psi (y) \widehat{W_{2, G}} (x, y) dy. \label{eq:vtilde}
+	\end{equation}	
+In the 1-level case, the role of the weight function is played by the Fourier transforms of the 1-level distributions (\ref{eq:nlevelSOeven}) - (\ref{eq:nlevelSymp}), which take the form $\delta + m_G$. Analogously, following calculations due to Hughes and Miller \cite{HughesMiller}, for each of the classical compact groups the weight function (\ref{eq:vtilde}) takes the form
+	\begin{equation}
+		\tilde V_{G, \psi} (x) \ = \   c_{G, \psi} \delta(x) + \tilde m_{G, \psi} (x) \mathbb 1_{[-1, 1]} (x) \label{eq:vtilde2}
+	\end{equation}	
+for constants $c_{G, \psi} \in \R$ and kernel $\tilde m_{G, \psi} \in L^2 [-1, 1]$ depending on our choice of initial test function $\psi$ and the classical compact group $G$, namely
+	\begin{equation}
+		c_{G, \psi} \ = \  \frac{\widehat \psi (0)}{\psi (0)} +
+			\begin{cases}
+				- \frac12, 		&\text{if } G = \Symp,\\
+				0, 				&\text{if } G = \Unit, \\
+				\frac12,			&\text{if } G = \SpOrthE, \SpOrthO, \Orth,
+			\end{cases}
+		\end{equation}
+and
+\begin{align}
+	\tilde m_{\SpOrthE, \psi} (x)
+	    &\ = \ \frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} + \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)-\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)},\\
+	\tilde  m_{\SpOrthO, \psi} (x)
+        &\ = \  \frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{3}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)+\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)},\\
+	\tilde m_{\Orth, \Psi}(x)
+		&\ = \  \frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1),\\
+	\tilde m_{\Unit, \psi} (x)
+	    &\ = \ 	\frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1),\\
+	\tilde m_{\Symp, \psi} (x)
+	    &\ = \ -\frac{1}{2}\left(\frac{\widehat{\psi}(0)}{\psi(0)} - \frac{1}{2}\right) + 2 \frac{\widehat{\psi}(x)}{\psi(0)}(|x|-1)+\frac{\int_{|x|-1}^{1-|x|}\widehat{\psi}(y) dy}{\psi(0)}.		
+\end{align}
+To complete the analogy with the 1-level case, we consider the normalized functional, weight function and kernel:
+	\begin{align}
+		R_{G, \psi} (f) &\ := \  \frac{\tilde R_{G, \psi}(f)}{c_{G, \psi}}, \label{eq:quadraticform} \\
+		V_{G, \psi} (x) &\ := \  \frac{\tilde V_{G, \psi} (x)}{c_{G, \psi}}, \\
+		m_{G, \psi} (x) &\ := \  \frac{\tilde m_{G, \psi} (x)}{c_{G, \psi}}.
+	\end{align}	
+Consider the compact self-adjoint operator $K_{G, \psi} :L^2 [-1/2, 1/2] \to L^2 [-1/2, 1/2]$ (see Section 6.6 of \cite{RudnickSarnak}) defined by
+	\begin{equation}
+		(K_{G, \psi} f) (x) \ := \  \int_{-1/2}^{1/2} m_{G, \psi} (x - y) f(y) dy.
+	\end{equation}	
+Then the optimization problem (\ref{eq:2minimize}) is equivalent to the minimization of the quadratic form
+    \begin{equation}
+    		R_{G, \psi} (f) \ = \  \frac{\langle (I + K_{G, \psi})f, f \rangle}{|\langle f, 1 \rangle|^2}
+    	\end{equation}	
+subject to the linear constraint $\langle f, 1 \rangle \neq 0$. We know $R_{G, \psi} \geq 0$, which implies $I + K_{G, \psi}$ is positive definite. If $I + K_{G, \psi}$ is non-singular, that is, $-1$ is not an eigenvalue of $K_{G, \psi}$, then it follows from the Fredholm alternative that there exists a unique $g_{G, \psi} \in L^2 [-1/2, 1/2]$ satisfying the integral equation
+	\begin{equation}
+			(I + K_{G, \psi}) (g_{G, \psi}) (x) \ = \  g_{G, \psi} (x) + \int_{-1/2}^{1/2} m_{G, \psi} (x - y) g_{G, \psi} (y) dy \ = \  1 \label{eq:fredholm}
+	\end{equation}	
+for $x \in [-1/2, 1/2]$, and by Proposition A.1 of \cite{ILS},
+	\begin{equation}
+		\inf_f R_{G, \psi} (f) \ = \  \frac{1}{\langle 1, g_{G, \psi} \rangle}. \label{eq:ILSminimum}
+	\end{equation}	
+Observe (\ref{eq:thmidentity})	in Theorem \ref{thm:optimalgpsi} follows directly from (\ref{eq:originalfunctional}), (\ref{eq:quadraticform}) and (\ref{eq:ILSminimum}). It remains to check the following lemma,
+
+\begin{lemma}
+	$I + K_{G, \psi}$ is non-singular, that is, $-1$ is not an eigenvalue of $K_{G, \psi}$. \label{lem:nonsingular}
+\end{lemma}
+
+\begin{proof}
+	Let $f \in L^2 [-1/2, 1/2]$ such that $K_{G, \psi} f = -f$, i.e.,
+		\[ 0 \ = \  f(x) + \int_{-1/2}^{1/2} m_{G, \psi} (x - y) f(y) dy. \]
+	This is a Fredholm equation of the second kind, and the unique continuous solution is given by the corresponding Liouville-Neumann series, which, in this case, is the constant zero function. On the other hand, $m_{G, \psi}$ is uniformly continuous on $[-1, 1]$, so for fixed $\epsilon > 0$, there exists $\delta > 0$ witnessing the uniform continuity. Then
+		\[ |f(x + h) - f(x)| \leq \int_{-1/2}^{1/2} |m_{G, \psi} (x + h - y) - m_{G, \psi}(x - y)| |f(y)| dy \leq \epsilon ||f||_{L^2} \]
+	whenever $|h| < \delta$. It follows that $f$ is continuous, so by uniqueness, $f = 0$. 	
+\end{proof}
+
+\begin{remark}
+	A similar argument shows that the solution $g_{G, \psi}$ to (\ref{eq:fredholm}) is continuous.
+\end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Solving a Fredholm integral equation with quadratic kernel} \label{sec:quadker}
+
+Let $\psi$ be as in (\ref{eq:fixedtest}), which has Fourier transform
+	\begin{equation}	
+		\widehat \psi (x) \ = \  (\mathbb 1_{[-1/2, 1/2]} * \mathbb 1_{[-1/2, 1/2]})(x) \ = \  (1 - |x|) \mathbb 1_{[-1, 1]} (x).
+	\end{equation}	
+Not only is this the natural choice of fixed test function $\psi$, it also lends to an elegant derivation of the corresponding optimal $g_{G, \psi}$, as the kernels $m_{G, \psi}$ take the form of quadratic polynomials in $|x|$ on the interval $[-1, 1]$. Namely,
+\begin{align}
+	m_{\SpOrthE, \psi} (x)
+		&\ = \  -\frac32 + \frac83 |x| - \frac23 x^2, \\
+	m_{\SpOrthO, \psi} (x)
+		&\ = \  -\frac{5}{6} + \frac83 |x| - 2 x^2, \\
+	m_{\Orth, \psi} (x)
+		&\ = \  -\frac76 + \frac83 |x| -\frac43 2x^2, \\
+	m_{\Unit, \psi} (x)
+		&\ = \  -1 + 2 |x| - x^2,\\
+	m_{\Symp, \psi} (x)
+		&\ = \  - \frac52 + 8|x| - 6 x^2.
+\end{align}
+Prior experience with the analogous 1-level problem in \cite{ILS}, \cite{FreemanThesis} and \cite{FreemanMiller} suggests that $g_{G, \psi}$ takes the form of an even trigonometric polynomial. Indeed, not only does this hold in Theorem \ref{thm:optimalgpsi}, this holds in generality for Fredholm integral equations where the kernel is an even quadratic polynomial in $|x|$, as Lemma \ref{lem:nonsingular} relies only on uniform continuity of the kernel.
+
+\begin{theorem}
+	Let $a, b, c \in \R$ with $b \geq 0$. The following Fredholm integral equation with quadratic kernel,
+		\begin{equation}
+			1 \ = \  g(x) + \int_{-1/2}^{1/2} (a + b |x - y| + c |x - y|^2) g(y) dy, 	\label{eq:fredholmquad}
+		\end{equation}
+	admits the unique continuous solution
+		\begin{equation}
+			g(x) \ = \  \frac{6b^{3/2} (b + c) \cos(\sqrt{2b} x) - 6 \sqrt{2} b c \sin(\sqrt{b/2})}{6 \sqrt{b} (b + c)^2 \cos(\sqrt{b/2}) + \sqrt{2} (6 a b^2 + 3b^3 + 3b^2 c + b c (c - 12) - 6c^2) \sin (\sqrt{b/2})}. \label{eq:quadsol}
+		\end{equation}\label{thm:quadratic}	
+\end{theorem}
+
+Theorem \ref{thm:optimalgpsi} follows as an immediate corollary. We prove Theorem \ref{thm:quadratic} following a differential equations argument due to Freeman and Miller. Observe that the left-hand side of (\ref{eq:fredholmquad}) is constant, so derivatives of the expression on the right vanish. Assuming $g$ is smooth, we differentiate under the integral sign to obtain
+\begin{align*}
+		\frac{d}{dx}  \int_{-1/2}^{1/2} |x - y| g(y) dy
+			&\ = \ \frac{d}{dx} \left( \int_{-1/2}^x (x - y) g(y) dy +  \int_x^{1/2} (y - x) g(y) dy \right)\\
+			&\ = \  \int_{-1/2}^x g(y) dy - \int_x^{1/2} g(y) dy, \\
+		\frac{d^2}{dx^2}  \int_{-1/2}^{1/2} |x - y| g(y) dy
+			&\ = \  2g(x),
+	\end{align*}
+and
+	\begin{align*}
+		\frac{d}{dx} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&\ = \  \int_{-1/2}^{1/2} (2x - 2y) g(y) dy, \\
+		\frac{d^2}{dx^2} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&\ = \  2 \int_{-1/2}^{1/2} g(y) dy.
+	\end{align*}
+We thereby obtain the corresponding system of linear homogeneous differential equations,
+	\begin{align}
+		1
+			&\ = \  g(0) + a \int_{-1/2}^{1/2} |y| g(y) dy, \label{eq:diff1}\\
+		0
+			&\ = \  g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy, \label{eq:diff2} \\
+		0
+			&\ = \  g''' (x) + 2b g'(x).		\label{eq:diff3}	
+	\end{align}
+Equation (\ref{eq:diff1}) is exactly (\ref{eq:fredholmquad}) taking $x = 0$. We obtain (\ref{eq:diff2}) and (\ref{eq:diff3}) by differentiating (\ref{eq:fredholmquad}) under the integral sign twice and thrice respectively. Assuming $g$ is even, solutions to (\ref{eq:diff3}) take the form $g(x) = A \cos(\sqrt{2b} x) + C$ for some constants $A, C \in \R$. Substituting into (\ref{eq:diff2}) reduces these two degrees of freedom to one,
+	\begin{align}
+		0
+			&\ = \  g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy \ = \  2C (b + c) + \frac{4A c}{\sqrt{2b}} \sin\left( \frac{\sqrt{2b}}{2} \right).
+	\end{align}
+	This shows that
+	\begin{equation}
+		 g(x) \ = \  A\cos(\sqrt{2b} x) - A\frac{2c}{b + c} \frac{\sin\left( \sqrt{b/2} \right)}{\sqrt{2b}}.
+	\end{equation}
+	Substituting the above into (\ref{eq:diff1}) allows us to solve for $A$ explicitly, which completes the derivation of (\ref{eq:quadsol}). \hfill $\Box$
+
+\begin{remark}
+    The same differential equations method can be applied for kernels which take the form of of higher order polynomials in $|x|$ on $[-1, 1]$, that is, $m(x) = p(x)$ for some degree $n$ polynomial $p$. Future approaches to the optimization problem may want to consider optimizing over fixed test functions $\psi$ which produce kernels of such form.
+\end{remark}
+%	If the kernel $m(x)=\sum_{i=0}^{n}d_i|x|^i$ is a polynomial in $|x|$, then the integral equation $g(x) - \int_{-1/2}^{1/2} m(x-y)g(y) dy = 1$ implies a homogeneous linear differential equation $g^{(n+1)}-2\sum_{j = 0}^{\lfloor\frac{n-1}{2}\rfloor}(2j+1)!d_{2j+1}g^{(n-(2j+1))} = 0$. For example, we might choose $\widehat{\psi} = f(x) * f(x)$ where $f(x) = (1 + ax^2)\mathbb{1}_{[-1/2,1/2]}$ and find the optimal test function for various $a\in\mathbb{R}$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Iteration}
+
+One can improve the bounds found in Table \ref{tab:bounds} by choosing $\phi_{G, \psi}$ as our new fixed test function and optimizing accordingly. As $\widehat{\phi_{G, \psi}}$ takes the form of a piecewise trigonometric polynomial for each of the classical compact groups, the methods used in Section \ref{sec:quadker} are not applicable. We instead appeal to the standard approach to solving Fredholm integral equations by method of iteration. Suppose an even continuous kernel $m: [-1, 1] \to \R$ satisfies
+	\begin{equation}
+		\int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m(x - y)|^2 dx dy < 1.
+	\end{equation}
+Define a self-adjoint compact operator $K: L^2 [-1/2, 1/2] \to L^2[-1/2, 1/2]$ by
+	\begin{equation}
+		(Kf)(x) \ := \  \int_{-1/2}^{1/2} m(x - y) f(y) dy.
+	\end{equation}
+It follows from the Cauchy-Schwarz inequality that the operator norm satisfies $||K||_{L^2 \to L^2} < 1$, that is, $K$ is a contraction mapping, since
+	\begin{equation}
+		||Kg||_2^2 \ = \  \int_{-1/2}^{1/2} \left( \int_{-1/2}^{1/2} m(x - y) g(y) dy \right)^2 dx \leq ||g||_2^2 \int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m(x - y)|^2 dx dy < 1.
+	\end{equation}	
+Thus by the Weierstrass $M$-test, the series
+	\begin{equation}
+		g(x) \ := \  \sum_{n = 0}^\infty (-1)^n K^n (1)(x) \label{eq:series}
+	\end{equation}
+converges absolutely and uniformly on the interval $[-1/2, 1/2]$. Moreover, it is the unique continuous solution to the Fredholm integral equation $(I + K) g = 1$. Since the series converges absolutely, we can integrate term by term to obtain the corresponding minimum value,
+	\begin{equation}
+		\frac{c_{G, \phi}}{\langle 1, g \rangle} \ = \  c_{G, \phi}\left( \sum_{n = 0}^\infty (-1)^n \int_{-1/2}^{1/2} K^n (1) (x) dx \right)^{-1}. \label{eq:seriesmin}
+	\end{equation}
+Unfortunately, this method of deriving new bounds is computationally intensive as we need to compute $n$-dimensional integrals of unwieldy expressions. Additionally, depending on the rate of convergence we may need to compute a large number of terms to obtain meaningful degrees of accuracy. For the purposes of this paper we focus on the unitary group, where these challenges can be avoided.
+
+For brevity, denote $\phi := \phi_{\Unit, \psi}$. In this case we know the series converges, as
+\begin{align}
+		\int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m_{\Unit, \phi}(x - y)|^2 dx dy \ = \  \frac{2 \sin^2 (1) (128 - 110 \cos (2) - 37 \sin (2))}{3 (-8 + 6 \cos (2) - \sin (2))^2} < 1.
+\end{align}
+Moreover, $\widehat{\phi}$ is non-negative, so it follows that $(-1)^n K^n_{\Unit, \phi}(1)$ is non-negative. We can therefore truncate the series in (\ref{eq:seriesmin}) to obtain an upper bound, as the terms are non-negative. Summing five terms gives the bound
+	\begin{equation}
+		\inf_\Phi \frac{1}{\Phi(0, 0)} \int_{\R^2} \Phi(x, y) W_{2, \Unit} (x, y) dx dy \leq c_{G, \psi}\left( \sum_{n = 0}^5 (-1)^n \int_{-1/2}^{1/2} K^n (1) (x) dx \right)^{-1} \approx 0.4888,
+	\end{equation}
+a small improvement on our previous bound in Table \ref{tab:bounds}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Work}
+
+We conclude with some remarks on how to further improve estimates on the optimal value of right hand side of (\ref{eq:boundorder}) and thereby obtaining improved bounds on the average order of vanishing at the central point. Recall that the quantity of interest is 
+\begin{equation}
+	 \frac{1}{\phi(0) \psi(0)} \int_{\R^2} \phi(x) \psi(y) W_{2, \cF} (x, y) dx dy \label{eq:further}
+\end{equation}
+for one variable test functions $\phi$ and $\psi$ with Fourier transforms supported in $[-1, 1]$. As hinted in the previous section, so far we have optimized over test functions $\phi$ for fixed $\psi$, so a natural approach to improving the bounds is to iterate: for each $k \geq 1$ we find optimal $\phi_{k + 1}$ for fixed $\phi_{k}$, then taking $\phi = \phi_k$ and $\psi = \phi_{k + 1}$ in (\ref{eq:further}) gives a non-increasing sequence in $k$. The hope is that this iteration converges to a global minimum. The main challenge encountered in computing the iteration is that we lack a general method of obtaining a closed form expression for the optimal $\phi_k$. From prior experience in \cite{ILS, FM} and Theorem \ref{thm:optimalgpsi}, we expect the series (\ref{eq:series}) converges to a piecewise continuous trigonometric polynomial, and likewise if we continue to iterate the optimization. 
+
+We also hope to generalize these arguments to arbitrary $n$-level densities, that is, optimizing over $n$-variables test function taking the form $\Phi(x_1, \dots, x_n) = \phi_1 (x_1) \cdots \phi_n (x_n)$ for fixed $\phi_1, \dots, \phi_{n - 1}$. Again, the natural choices for the fixed test functions are 
+	\[ \phi_1 (x) = \dots = \phi_{n - 1} (x) = \left( \frac{\sin (\pi x)}{\pi x} \right)^2, \]
+and we suspect the differential equations method outlined in Section \ref{sec:quadker} continues to be amenable to this particular case. 	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliography{biblio}
+\begin{thebibliography}{FMGGGG15}
+
+\bibitem[AAILMZ]{AAILMZ}
+L. Alpoge, N. Amersi, G. Iyer, O. Lazarev, S. J. Miller and L. Zhang, \emph{Maass waveforms and low-lying zeros}, in Analytic Number Theory: In Honor of Helmut Maier's 60th Birthday, Springer-Verlag, 2015.
+
+\bibitem[AM]{AM}
+L. Alpoge and S. J. Miller, \emph{The low-lying zeros of level 1 Maass forms}, Int. Math. Res. Not. IMRN 2010, no. 13, 2367--2393.
+
+\bibitem[BFMT-B]{BFMT-B}
+O. Barrett, F. W. K. Firk, S. J. Miller and C. Turnage-butterbaugh, \emph{From Quantum Systems to $L$-Functions: Pair Correlation Statistics and Beyond}, in Open Problems in Mathematics (editors John Nash  Jr. and Michael Th. Rassias), Springer-Verlag, 2016, pages 123--171.
+
+\bibitem[BSD1]{BSD1}
+\newblock B. Birch and H. Swinnerton-Dyer, \emph{Notes on elliptic
+curves. I}, J. reine angew. Math. \textbf{212} (1963), 7--25.
+
+\bibitem[BSD2]{BSD2}
+\newblock B. Birch and H. Swinnerton-Dyer, \emph{Notes on elliptic
+curves. II}, J. reine angew. Math. \textbf{218} (1965), 79--108.
+
+\bibitem[BBLM]{bogo}
+  E. Bogomolny, O. Bohigas, P. Leboeuf, and A.G. Monastra,
+  \emph{On the spacing distribution of the Riemann zeros: corrections to the asymptotic result}, J. Phys. A: Math. Gen. \textbf{39} (2006), 10743--10754.
+
+\bibitem[BK]{BogoKeat}
+  E. Bogomolny and J.P. Keating, \emph{Gutzwiller's trace formula and spectral statistics: beyond the diagonal approximation}, Phys. Rev. Lett. \textbf{77} (1996), 1472--1475.
+
+\bibitem[Con]{Con}
+J. B. Conrey, \emph{$L$-Functions and random matrices}. Pages
+331--352 in \emph{Mathematics unlimited --- 2001 and Beyond},
+Springer-Verlag, Berlin, 2001.
+
+\bibitem[CFKRS]{CFKRS}
+\newblock B. Conrey, D. Farmer, P. Keating, M. Rubinstein and N.
+Snaith, \emph{Integral moments of $L$-functions}, Proc. London Math.
+Soc. (3)  \textbf{91} (2005),  no. 1, 33--104.
+
+\bibitem[CFZ1]{CFZ1}
+\newblock J. B. Conrey, D. W. Farmer and M. R. Zirnbauer, \emph{Autocorrelation of ratios
+of $L$-functions}, Comm. Number Theor. Phys. \textbf{2} (2008), no. 3, 593--636
+
+\bibitem[CFZ2]{CFZ2}
+\newblock J. B. Conrey, D. W. Farmer and M. R. Zirnbauer, \emph{Howe pairs, supersymmetry,
+and ratios of random characteristic polynomials for the classical
+compact groups}, preprint. \texttt{http://arxiv.org/abs/math-ph/0511024}.
+
+\bibitem[CI]{CI}
+J. B. Conrey and H. Iwaniec, \emph{Spacing of Zeros of Hecke L-Functions and the Class Number Problem}, Acta Arith. \textbf{103} (2002) no. 3, 259--312.
+
+\bibitem[CS]{CS}
+\newblock J. B. Conrey and N. C. Snaith, \emph{Applications of the
+$L$-functions Ratios Conjecture},  Proc. London Math. Soc. (3) \textbf{94} (2007), no. 3, 594--646.
+
+\bibitem[Da]{Da}
+H. Davenport, \emph{Multiplicative Number Theory}, 2nd edition, Graduate Texts in Mathematics
+74, Springer-Verlag, New York, 1980, revised by H. Montgomery.
+
+\bibitem[DHKMS1]{DHKMS1}
+\newblock E. Due\~nez, D. K. Huynh, J. C. Keating, S. J. Miller and N. Snaith, \emph{The lowest eigenvalue of Jacobi Random Matrix Ensembles and Painlev\'e VI}, Journal of Physics A: Mathematical and Theoretical \textbf{43} (2010) 405204 (27pp).
+
+\bibitem[DHKMS2]{DHKMS2}
+\newblock E. Due\~nez, D. K. Huynh, J. C. Keating, S. J. Miller and N. Snaith, \emph{Models for zeros at the central point in families of elliptic curves} (with Eduardo Due\~nez, Duc Khiem Huynh, Jon Keating and Nina Snaith), J. Phys. A: Math. Theor. \textbf{45} (2012) 115207 (32pp).
+
+
+\bibitem[DM1]{DM1}
+\newblock E. Due\~nez and S. J. Miller, \emph{The low lying zeros of a
+GL$(4)$ and a GL$(6)$ family of $L$-functions}, Compositio Mathematica \textbf{142} (2006), no. 6, 1403--1425.
+
+\bibitem[DM2]{DM2}
+\newblock  E. Due\~nez and S. J. Miller, \emph{The effect of convolving families of $L$-functions on the underlying group symmetries}, Proceedings of the London Mathematical Society, 2009; doi: 10.1112/plms/pdp018.
+
+\bibitem[ER-GR]{ER-GR}
+A. Entin, E. Roditty-Gershon and Z. Rudnick, \emph{Low-lying zeros of quadratic Dirichlet $L$-functions, hyper-elliptic curves and Random Matrix Theory}, Geometric and Functional Analysis \textbf{23} (2013), no. 4, 1230--1261.
+
+\bibitem[FiM]{FiM}
+D. Fiorilli and S. J. Miller, \emph{Surpassing the Ratios Conjecture in the 1-level density of Dirichlet $L$-functions}, Algebra \& Number Theory \textbf{Vol. 9} (2015), No. 1, 13--52.
+
+\bibitem[FM]{FM}
+F. W. K. Firk and S. J. Miller, \emph{Nuclei, Primes and the Random Matrix Connection}, Symmetry \textbf{1} (2009), 64--105; doi:10.3390/sym1010064. \texttt{http://www.mdpi.com/2073-8994/1/1/64}.
+
+\bibitem[FI]{FI}
+\newblock E. Fouvry and H. Iwaniec, \emph{Low-lying zeros of dihedral
+$L$-functions}, Duke Math. J. \textbf{116} (2003), no. 2, 189--217.
+
+\bibitem[Fre]{FreemanThesis}
+J. Freeman, \emph{Fredholm theory and optimal test functions for detecting central point vanishing over families of $L$-functions}, Williams College Thesis, 2017.
+
+\bibitem[FM]{FreemanMiller}
+J. Freeman and S. J. Miller, \emph{\newblock Determining optimal test functions for bounding the average rank in
+  families of $l$-functions}, in SCHOLAR -- a Scientific Celebration Highlighting Open Lines of Arithmetic Research, Conference in Honour of M. Ram Murty's Mathematical Legacy on his 60th Birthday (A. C. Cojocaru, C. David and F. Pappaardi, editors), Contemporary Mathematics \textbf{655}, AMS and CRM, 2015.
+
+\bibitem[Gal]{Gallagher}
+P. X. Gallagher, \emph{Pair correlation of zeros of the zeta function}, Journal für die reine und angewandte Mathematik \textbf{362} (1985), 72--86.
+
+\bibitem[Gao]{Gao}
+\newblock P. Gao, \emph{$N$-level density of the low-lying zeros of
+quadratic Dirichlet $L$-functions}, Ph.~D thesis, University of
+Michigan, 2005.
+
+\bibitem[Gol]{Gol}
+D. Goldfeld, \emph{The class number of quadratic fields and the
+conjectures of Birch and Swinnerton-Dyer}, Ann. Scuola Norm. Sup.
+Pisa Cl. Sci. 3, \textbf{4} (1976), 624--663.
+
+\bibitem[GK]{GK}
+\newblock D. Goldfeld and A. Kontorovich, \emph{On the ${\rm GL}(3)$ Kuznetsov formula with applications to symmetry types of families of $L$-functions}, In Automorphic Representations and $L$-Functions (ed. D. Prasad et al), Tata Institute (2013), 263--310.
+
+\bibitem[GJMMNPP]{GJMMPP}
+J. Goes, S. Jackson, S. J. Miller, D. Montague, K. Ninsuwan, R. Peckner and T. Pham, \emph{A unitary test of the $L$-functions Ratios Conjecture}, Journal of Number Theory \textbf{130} (2010), no. 10, 2238--2258.
+
+\bibitem[GHK]{GHK}
+S. M. Gonek, C. Hughes and J. P. Keating, \emph{A hybrid Euler-Hadamard product for the Riemann zeta function }, Duke Math. J. \textbf{136} (2007) 507--549.
+
+\bibitem[G\"u]{Gu}
+\newblock A. G\"ulo\u{g}lu, \emph{Low Lying Zeros of Symmetric
+Power $L$-Functions},  Int. Math. Res. Not. (2005),  no. 9,
+517--550.
+
+\bibitem[Ha]{Ha}
+B. Hayes, \emph{The spectrum of Riemannium}, American Scientist
+\textbf{91} (2003), no. 4, 296--300.
+
+\bibitem[Hej]{Hej}
+\newblock D. Hejhal, \emph{On the triple correlation of zeros of
+the zeta function}, Internat. Math. Res. Notices 1994, no. 7,
+294--302.
+
+\bibitem[HM]{HughesMiller}
+C. P. Hughes and S. J. Miller, \emph{Calculating the level density a'la Katz-Sarnak}, working notes, 2004.
+
+\bibitem[HM]{HM}
+\newblock C. Hughes and S. J. Miller, \emph{Low-lying zeros of $L$-functions
+with orthogonal symmetry}, Duke Math. J.
+\textbf{136} (2007), no. 1, 115--172.
+
+\bibitem[HR1]{HR1}
+\newblock C. Hughes and Z. Rudnick, \emph{Mock Gaussian behaviour for linear statistics of classical
+compact groups}, J. Phys. A \textbf{36} (2003), 2919--2932.
+
+\bibitem[HR2]{HR2}
+\newblock C. Hughes and Z. Rudnick, \emph{Linear statistics of
+low-lying zeros of $L$-functions}, Quart. J. Math. Oxford
+\textbf{54} (2003), 309--333.
+
+\bibitem[IK]{IK}
+H. Iwaniec and E. Kowalski, \emph{Analytic Number Theory}, AMS
+Colloquium Publications, Vol. 53, AMS, Providence, RI, 2004.
+
+\bibitem[ILS]{ILS}
+H. Iwaniec, W. Luo, and P. Sarnak, \emph{Low lying zeros of families of L-functions}, Inst. Hautes \'Etudes Sci. Publ. Math. \textbf{91} (2000), 55-131.
+
+\bibitem[KS1]{KatzSarnak}
+N. Katz and P. Sarnak, \emph{Random Matrices, Frobenius Eigenvalues and Monodromy}, AMS Colloquium Publications, Vol. 45, AMS,
+Providence, RI, 1999.
+
+\bibitem[KS2]{KatzSarnak2}
+N. Katz and P. Sarnak, \emph{Zeros of zeta functions and
+symmetries}, Bull. AMS \textbf{36} (1999), 1--26.
+
+\bibitem[KeSn1]{KeSn1}
+J. P. Keating and N. C. Snaith, \emph{Random matrix theory and $\zeta(1/2+it)$}, Commun. Math. Phys. \textbf{214} (2000), 57--89.
+
+\bibitem[KeSn2]{KeSn2}
+J. P. Keating and N. C. Snaith, \emph{Random matrix theory and $L$-functions at $s=1/2$}, Commun. Math. Phys.  \textbf{214} (2000), 91--110.
+
+\bibitem[KeSn3]{KeSn3}
+\newblock J. P. Keating and N. C. Snaith, \emph{Random
+matrices and $L$-functions}, Random matrix theory, J. Phys. A
+\textbf{36} (2003), no. 12, 2859--2881.
+
+\bibitem[LM]{LM}
+J. Levinson and S. J. Miller, \emph{The $n$-level density of zeros of quadratic Dirichlet $L$-functions}, Acta Arithmetica \textbf{161} (2013), 145--182.
+
+\bibitem[Mil1]{Mil1}
+\newblock S. J. Miller, \emph{$1$- and $2$-level densities for families of elliptic
+curves: evidence for the underlying group symmetries}, Compositio
+Mathematica \textbf{140} (2004), 952--992.
+
+\bibitem[Mil2]{Mil2}
+S. J. Miller (with an appendix by E. Due\~nez), \emph{Investigations of zeros near the central point
+of elliptic curve $L$-functions}, Experimental Mathematics \textbf{15} (2006), no. 3, 257--279.
+
+\bibitem[Mil3]{Mil3}
+S. J. Miller, \emph{A symplectic test of the $L$-Functions Ratios Conjecture}, Int Math Res Notices (2008) Vol. 2008, article ID rnm146, 36 pages, doi:10.1093/imrn/rnm146.
+
+\bibitem[Mil4]{Mil4}
+\newblock S. J. Miller, \emph{An orthogonal test of the $L$-functions Ratios Conjecture}, Proceedings of the London Mathematical Society 2009, doi:10.1112/plms/pdp009.
+
+\bibitem[MilMo]{MilMo}
+\newblock S. J. Miller and D. Montague, \emph{An Orthogonal Test of the $L$-functions Ratios Conjecture, II}, Acta Arith. \textbf{146} (2011), 53--90.
+
+\bibitem[MilPe]{MilPe}
+\newblock S. J. Miller and R. Peckner, \emph{Low-lying zeros of number field $L$-functions}, Journal of Number Theory \textbf{132} (2012), 2866--2891.
+
+\bibitem[Mon]{Mon} H. Montgomery, \emph{The pair correlation of zeros of
+  the zeta function}. Pages 181--193 in \emph{Analytic Number Theory},
+  Proceedings of Symposia in Pure Mathematics, vol. 24, AMS,
+  Providence, RI, 1973.
+
+\bibitem[Od1]{Od1} A. Odlyzko, \emph{On the distribution of spacings
+  between zeros of the zeta function}, Math. Comp. \textbf{48} (1987),
+  no. $177$,  273--308.
+
+\bibitem[Od2]{Od2} A. Odlyzko, \emph{The $10^{22}$-nd zero of the
+  Riemann zeta function}. Pages  139--144 in \emph{Proceedings of the
+  Conference on Dynamical, Spectral and Arithmetic Zeta Functions},
+  ed. M. van Frankenhuysen and M. L. Lapidus, Contemporary Mathematics
+  Series,AMS, Providence, RI, $2001$.
+
+\bibitem[OS1]{OS1}
+\newblock A. E. \"Ozl\"uk and C. Snyder, \emph{Small zeros of quadratic $L$-functions},
+Bull. Austral. Math. Soc. \textbf{47} (1993), no. 2, 307--319.
+
+\bibitem[OS2]{OS2}
+\newblock A. E. \"Ozl\"uk and C. Snyder, \emph{On the distribution of the
+nontrivial zeros of quadratic $L$-functions close to the real axis},
+Acta Arith. \textbf{91} (1999), no. 3, 209--228.
+
+\bibitem[RR]{RR}
+\newblock G. Ricotta and E. Royer, \emph{Statistics for low-lying
+zeros of symmetric power $L$-functions in the level aspect}, Forum Mathematicum \textbf{23} (2010), no. 5
+
+\bibitem[Ro]{Ro}
+\newblock E. Royer, \emph{Petits z\'{e}ros de fonctions $L$
+de formes modulaires}, Acta Arith. \textbf{99} (2001), 47--172.
+
+\bibitem[Rub]{Rub}
+\newblock M. Rubinstein, \emph{Low-lying zeros of
+$L$-functions and Random Matrix Theory}, Duke Math. J. \textbf{109}
+(2001), no. 1, 147--181.
+
+\bibitem[RubSa]{RubSa}
+M. Rubinstein and P. Sarnak, \emph{Chebyshev's bias}, Experiment.
+Math. \textbf{3} (1994), no. 3, 173--197.
+
+\bibitem[RS]{RudnickSarnak}
+Z. Rudnick and P. Sarnak, \emph{Zeros of principal $L$-functions and random matrix theory}, Duke J. of Math. \textbf{81} (1996),
+269--322.
+
+\bibitem[ShTe]{ShTe}
+S. W. Shin and N. Templier, \emph{Sato-Tate theorem for families and low-lying zeros of automorphic $L$-functions}, Invent. Math. \textbf{203} (2016), 1--177.
+
+\bibitem[Ya]{Ya}
+A. Yang, \emph{Low-lying zeros of Dedekind zeta functions attached to cubic number fields}, preprint.
+
+\bibitem[Yo1]{Yo1}
+\newblock M. Young, \emph{Lower-order terms of the 1-level density of families of elliptic
+curves},  Int. Math. Res. Not. (2005),  no. 10, 587--633.
+
+\bibitem[Yo2]{Yo2}
+\newblock M. Young, \emph{Low-lying zeros of families of elliptic curves},
+J. Amer. Math. Soc. \textbf{19} (2006), no. 1, 205--250.
+
+\end{thebibliography}
+
+
+
+\end{document} 

@@ -1,0 +1,989 @@
+% user docs for compositio.cls
+\def\Filedate{2002/12/18} % date this file last revised
+\def\Fileversion{1.0b}    % version of compositio.cls documented
+
+\documentclass{compositio}
+% If you have the AMSLaTeX distribution installed on your system,
+% please delete the "[noams]" option above.
+
+% definitions specific to this author guide only
+
+\newcommand{\twovec}[2]
+{\left(\begin{array}{c}
+                        #1    \\
+                        #2
+                          \end{array}\right) }
+
+\newcommand{\mattwo}[4]
+{\left(\begin{array}{cc}
+                        #1  & #2   \\
+                        #3 &  #4
+                          \end{array}\right) }
+
+\newcommand{\mattwon}[4]
+{\begin{array}{cc}
+                        #1  & #2   \\
+                        #3 &  #4
+                          \end{array} }
+
+
+\newcommand{\matthree}[9]
+{\left(\begin{array}{ccc}
+                        #1  & #2 & #3  \\
+                        #4 &  #5 & #6 \\
+                        #7 &  #8 & #9
+                          \end{array}\right) }
+
+\newcommand{\dettwo}[4]
+{\left|\begin{array}{cc}
+                        #1  & #2   \\
+                        #3 &  #4
+                          \end{array}\right| }
+
+\newcommand{\detthree}[9]
+{\left|\begin{array}{ccc}
+                        #1  & #2 & #3  \\
+                        #4 &  #5 & #6 \\
+                        #7 &  #8 & #9
+                          \end{array}\right| }
+
+
+
+\newcommand*{\code}[1]{{\mdseries\texttt{#1}}}
+\newcommand*{\pkg}[1]{{\mdseries\textsf{#1}}}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\contentsname}{Contents\\{\footnotesize\normalfont(A table
+of contents should normally not be included)}}
+%
+
+\newcommand\st{\mbox{s.t.\ }}
+\newcommand\be{\begin{equation}}
+\newcommand\ee{\end{equation}}
+\newcommand\bp{\begin{proof}}
+\newcommand\ep{\end{proof}}
+
+\newcommand\bea{\begin{eqnarray}}
+\newcommand\eea{\end{eqnarray}}
+\newcommand\bi{\begin{itemize}}
+\newcommand\ei{\end{itemize}}
+\newcommand\ben{\begin{enumerate}}
+\newcommand\een{\end{enumerate}}
+\newcommand\bc{\begin{center}}
+\newcommand\ec{\end{center}}
+\newcommand\ba{\begin{array}}
+\newcommand\ea{\end{array}}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{exe}{Problem}
+\newtheorem{rek}[thm]{Remark}
+
+
+\def\notdiv{\ \mathbin{\mkern-8mu|\!\!\!\smallsetminus}}
+\newcommand{\Qoft}{\Bbb{Q}(t)}  %use in linux
+\newcommand{\done}{\Box} %use in linux
+\newcommand{\R}{\ensuremath{\Bbb{R}}}
+\newcommand{\C}{\ensuremath{\Bbb{C}}}
+\newcommand{\Z}{\ensuremath{\Bbb{Z}}}
+\newcommand{\Q}{\Bbb{Q}}
+
+\newcommand{\ga}{\alpha}     %lowercase alpha
+\newcommand{\gb}{\beta}      %lowercase beta
+\newcommand{\gd}{\delta}     %lowercase delta
+\newcommand{\gep}{\epsilon}   %lowercase epsilon
+\newcommand{\G}{\Gamma}     %Capital Gamma
+\newcommand{\g}{\gamma}     %lowercase gamma
+\newcommand{\gL}{\Lambda}    %capital lamda
+\newcommand{\gl}{\lambda}
+
+\newcommand{\lap}{\triangle}    %laplacian
+\newcommand{\pr}{\partial}     %partial derivative
+\newcommand{\hphi}{\widehat{\phi}}  %phi^
+\newcommand{\phiint}{\int_{-\infty}^{\infty} \phi(y) dy}
+
+\newcommand{\tp}{t_p}           %t_p
+\newcommand{\pnddisc}{p \ {\notdiv} \ \lap}  %p not dividing disc
+\newcommand{\pddisc}{p | \lap}          %p dividing disc
+\newcommand{\lcp}{\frac{\log c_E}{2 \pi}}  %Log(c_E)/2Pi
+\newcommand{\lnp}{\frac{\log N}{2 \pi}}     %Log(N)/2Pi
+
+\newcommand{\epxxi}{e^{2 \pi i x \xi}}  %exp(2 Pi i x xi)
+\newcommand{\enxxi}{e^{-2 \pi i x \xi}} %exp(-2Pi i x xi)
+\newcommand{\epzxi}{e^{2 \pi i (x+iy) \xi}}
+\newcommand{\enzxi}{e^{-2 \pi i (x+iy) \xi}}
+
+\newcommand{\fof}{\frac{1}{4}}  %oneforth
+\newcommand{\foh}{\frac{1}{2}}  %onehalf
+\newcommand{\fot}{\frac{1}{3}}  %onethird
+\newcommand{\fop}{\frac{1}{\pi}}    %1/pi
+\newcommand{\ftp}{\frac{2}{\pi}}    %2/pi
+\newcommand{\fotp}{\frac{1}{2 \pi}} %1/2pi
+\newcommand{\fotpi}{\frac{1}{2 \pi i}}
+\newcommand{\fologn}{O\Big(\frac{1}{\log N}\Big)}
+\newcommand{\fllnln}{O\Big(\frac{\log \log N}{\log N}\Big)}
+\newcommand{\flogpn}{\frac{\log p}{\log N}}
+
+
+\newcommand{\FD}{\mathcal{F}} %fundamental domain
+\newcommand{\HP}{\ensuremath{\mathbf{H}}} %upperhalf plane
+\newcommand{\js}[1]{ { \underline{#1} \choose p} }
+\newcommand{\zsum}[1]{ \sum_{#1 = 0}^{p-1} }
+\newcommand{\osum}[1]{ \sum_{#1 = 1}^{p-1} }
+
+%additional commands for 2-density
+
+\newcommand{\oof}{\frac{1}{|\mathcal{F}|}} % 1/|F|
+\newcommand{\oop}{\frac{1}{p}}
+\newcommand{\oopi}{\frac{1}{p_i}}
+\newcommand{\oopo}{\frac{1}{p_1}}
+\newcommand{\oopt}{\frac{1}{p_2}}
+
+\newcommand{\hf}{\widehat{f}}
+\newcommand{\hfi}{\widehat{f_i}}
+\newcommand{\hfo}{\widehat{f_1}}
+\newcommand{\hft}{\widehat{f_2}}
+\newcommand{\NF}{|\mathcal{F}|}   %|F|
+\newcommand{\sumtinF}{\sum_{t \in \mathcal{F}}}
+\newcommand{\ooNF}{\frac{1}{|\mathcal{F}|}}   %1/|F|
+\newcommand{\sumef}{\sum_{E \in \mathcal{F}}}
+
+\newcommand{\plogx}{ \frac{\log p}{\log X}}
+\newcommand{\plogm}{\frac{\log p}{\log M}}
+%\newcommand{\plognt}{\frac{\log p}{\log N_t}}
+% change in notation: use C(t) for conductor, not C(t)
+\newcommand{\plogCt}{\frac{\log p}{\log C(t)}}
+\newcommand{\pilogm}{\frac{\log p_i}{\log M}}
+\newcommand{\pjlogm}{\frac{\log p_j}{\log M}}
+\newcommand{\pologm}{\frac{\log p_1}{\log M}}
+\newcommand{\ptlogm}{\frac{\log p_2}{\log M}}
+
+\newcommand{\jsi}[1]{ { \underline{#1} \choose p_i} }
+\newcommand{\jso}[1]{ { \underline{#1} \choose p_1} }
+\newcommand{\jst}[1]{ { \underline{#1} \choose p_2} }
+\newcommand{\jsthree}[1]{ { \underline{#1} \choose 3} }
+
+
+\newcommand{\epi}[1]{ \mathbf{e}{ \underline{#1} \choose p_i} }
+\newcommand{\epo}[1]{ \mathbf{e}{ \underline{#1} \choose p_1} }
+\newcommand{\ept}[1]{ \mathbf{e}{ \underline{#1} \choose p_2} }
+\newcommand{\epot}[1]{ \mathbf{e}{ \underline{#1} \choose p_1p_2} }
+%\newcommand{\ep}[1]{ \mathbf{e}{ \underline{#1} \choose p} }
+\newcommand{\eP}[1]{ \mathbf{e}{ \underline{#1} \choose P} }
+
+%  **********************************************
+%  NEW COMMANDS FOR n-LEVEL DENSITIES
+%  **********************************************
+
+\newcommand{\nF}{|\mathcal{F}|}
+\newcommand{\uF}{\underline{F}}
+\newcommand{\nuF}{\nu(\underline{F})}
+
+\newcommand{\jsj}[1]{ { \underline{#1} \choose p_j} }
+\newcommand{\jsk}[1]{ { \underline{#1} \choose p_k} }
+\newcommand{\epj}[1]{ \mathbf{e}{ \underline{#1} \choose p_j} }
+\newcommand{\epk}[1]{ \mathbf{e}{ \underline{#1} \choose p_k} }
+
+\newcommand{\jsqk}[1]{ { \underline{#1} \choose q_k} }
+\newcommand{\epqk}[1]{ \mathbf{e}{ \underline{#1} \choose q_k} }
+\newcommand{\eppq}[1]{ \mathbf{e}{ \underline{#1} \choose PQ} }
+\newcommand{\epq}[1]{ \mathbf{e}{ \underline{#1} \choose PQ} }
+\newcommand{\eQ}[1]{ \mathbf{e}{ \underline{#1} \choose Q} }
+\newcommand{\epqt}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{PQ}t\Bigg)}  }
+\newcommand{\eppqa}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{PQ}a\Bigg)}  }
+\newcommand{\eppqb}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{PQ}b\Bigg)}  }
+
+\newcommand{\epa}[1]{ \mathbf{e}{ \underline{#1} \choose P_AQ} }
+\newcommand{\epaa}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{P_AQ}a\Bigg)}  }
+\newcommand{\epab}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{P_AQ}b\Bigg)}  }
+\newcommand{\logpne}{\frac{\log p}{\log N_E}}
+\newcommand{\loglognn}{\frac{\log \log N_E}{\log N_E}}
+
+\newcommand{\plogne}{\frac{\log p}{\log N_E}}
+\newcommand{\pologne}{\frac{\log p_1}{\log N_E}}
+\newcommand{\ptlogne}{\frac{\log p_2}{\log N_E}}
+\newcommand{\pilogne}{\frac{\log p_i}{\log N_E}}
+\newcommand{\etam}{\frac{\eta_E}{\log M}}
+\newcommand{\etameta}{\frac{\eta_E}{\log M + \eta_E}}
+\newcommand{\oologm}{\frac{1}{\log M}}
+
+
+
+%  **********************************************
+%  NEW COMMANDS FOR n-LEVEL DENSITIES, 9t+1
+%  **********************************************
+\newcommand{\epaqb}[1]{ \mathbf{e}{ \underline{#1} \choose P_AQ_B} }
+\newcommand{\epaqbt}[1]{ \mathbf{e}{ \Bigg(\frac{{#1}}{P_AQ_B}t\Bigg)}  }
+\newcommand{\epqj}[1]{ \mathbf{e}{ \underline{#1} \choose q_j} }
+\newcommand{\jsqj}[1]{ { \underline{#1} \choose q_j} }
+
+%  **********************************************
+%  NEW COMMANDS FOR Density Kernel Calculations
+%  **********************************************
+
+\newcommand{\chiint}{\chi_{[-\foh,\foh]}}
+\newcommand{\kot}[1]{ \frac{\sin \pi({#1}) }{\pi ({#1})} }
+\newcommand{\kkot}[1]{ \frac{\sin \pi {#1} }{\pi {#1} } }
+
+
+%  **********************************************
+%  NEW COMMANDS FOR DIRICHLET CHARACTERS SECTIONS
+%  **********************************************
+
+\newcommand{\logpm}{ \frac{\log p}{\log(m/\pi)} }      %logp / log(m/pi)
+\newcommand{\logptm}{ 2\frac{\log p}{\log(m/\pi)} }    %2logp / log(m/pi)
+\newcommand{\logpnp}{ \frac{\log p}{\log(\frac{N}{\pi})} }     %logp / log(N/pi)
+\newcommand{\logptnp}{ 2\frac{\log p}{\log(\frac{N}{\pi})} }    %2logp / log(N/pi)
+\newcommand{\bchi}{ \overline{\chi} }                               %Chi-Bar
+\newcommand{\fologm}{O(\frac{1}{\log m})}                       %O(1/logm)
+\newcommand{\fommt}{\frac{1}{m-2}}                             %1/m-2
+\newcommand{\jsq}[1]{ { \underline{#1} \choose q} }            %(*/q)
+
+%  **********************************************
+%  NEW COMMANDS FOR N-LEVEL DENSITIES
+%  **********************************************
+
+\newcommand{\hkpn}{H_k^+(N)}
+\newcommand{\hkmn}{H_k^-(N)}
+\newcommand{\hkpmn}{H_k^\pm(N)}
+\newcommand{\hkn}{H_k^\ast(N)}
+\newcommand{\hksn}{H_k^\sigma(N)}
+
+\newcommand{\hkpm}{H_k^+(M)}
+\newcommand{\hkmm}{H_k^-(M)}
+\newcommand{\hkpmm}{H_k^\pm(M)}
+\newcommand{\hkm}{H_k^\ast(M)}
+
+\newcommand{\jk}[2]{J_{k-1}\left( 4\pi \frac{ \sqrt{ #1 } }{ #2 }
+\right) }
+\newcommand{\sqn}{\sqrt{N}}
+
+\newcommand{\phir}[1]{\widehat{\phi}\left( \frac{ \log p_{#1} }{\log R}
+\right) }
+\newcommand{\phirx}[1]{\widehat{\phi}\left( \frac{ \log x_{#1} }{\log R}
+\right) }
+\newcommand{\phiv}[1]{\widehat{\phi}\left( \frac{ \log #1 }{\log R}
+\right) }
+\newcommand{\hphiv}[1]{\widehat{\phi}\left( #1 \right) }
+\newcommand{\flogr}[1]{\frac{ #1 }{\log R}}
+
+\newcommand{\pfrac}[1]{\frac{2\log p_{#1}}{\sqrt{p_{#1}} \log R}}
+
+\newcommand{\glp}[1]{\gl_f(p_{#1})}
+
+\newcommand{\ils}{\cite{ILS}}
+\newcommand\eq{{Equation\ }}
+\newcommand{\chib}[1]{\overline{\chi}(#1)}
+\newcommand{\chibt}[1]{\overline{\chi_2}(#1)}
+\newcommand{\chibo}[1]{\overline{\chi_1}(#1)}
+\newcommand{\chibthree}[1]{\overline{\chi_3}(#1)}
+\newcommand{\db}{\overline{d}}
+\newcommand{\mod}{\ mod \ }
+
+
+
+    %=======================================================
+    %   THIS IS WHERE YOU PUT SHORTCUT DEFINITIONS
+    %========================================================
+
+
+    %=======================================================
+    %   THIS IS USED TO LABEL THE EQUATIONS 1.1, 1.2, ..., 2.1
+    %========================================================
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+
+
+
+\begin{document}
+
+\title{Calculating the Level Density a la Katz-Sarnak}
+%
+\author{Christopher P. Hughes}
+\email{hughes@aimath.org}
+\address{American Institute of Mathematics, Palo Alto, CA,
+$94306$}
+\author{Steven J. Miller}
+\email{sjmiller@math.ohio-state.edu}
+\address{Department of Mathematics, The Ohio State University, Columbus, Ohio}
+%\address{American Institute of Mathematics, Palo Alto, CA, $94306$}
+%\dedication{A dedication can be included here.}
+\classification{11M26 (primary), 11G05, 11G40, 11M26 (secondary).
+} \keywords{$2$-Level Density}
+%\thanks{This file documents \pkg{compositio} version \Fileversion\ and
+%was last revised \Filedate.}
+
+\begin{abstract}
+These are an expanded set of notes from \cite{Mil1}. Below we
+calculate the 1 and 2-Level Densities for the Classical Compact
+Groups, using the determinant expansions from Katz-Sarnak.
+\end{abstract}
+
+\maketitle
+
+%\tableofcontents
+
+%\vspace*{6pt}\tableofcontents  % for this guide only.
+% A table of contents should normally not be included
+
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+\section{$1$- and $2$-Level Density Kernels for the Classical Compact
+Groups} \setcounter{equation}{0}
+
+By \cite{KS1}, the $m$-level densities for the classical compact
+groups are
+
+\begin{eqnarray}\label{eqdensitykernels}
+W_{m,\epsilon}(x) & = & \textbf{det} \Big(
+K_\epsilon(x_i,x_j)\Big)_{i,j\leq m}  \nonumber\\ W_{m,O^+}(x) & =
+& \textbf{det} (K_1(x_i,x_j))_{i,j\leq m} \nonumber\\ W_{m,O^-}(x)
+& = & \textbf{det} (K_{-1}(x_i,x_j))_{i,j\leq m}  + \sum_{k=1}^m
+\delta(x_k) \textbf{det}(K_{-1}(x_i,x_j))_{i,j\neq k} \nonumber\\
+& = & (W_{m,O^-})_{1}(x) + (W_{m,O^-})_{2}(x) \nonumber\\
+W_{m,O}(x) & = & \foh W_{m,O^+}(x) + \foh W_{m,O^-}(x) \nonumber\\
+W_{m,U}(x) & = & \textbf{det} (K_0(x_i,x_j))_{i,j\leq m}
+\nonumber\\ W_{m,Sp}(x) &=& \textbf{det}
+(K_{-1}(x_i,x_j))_{i,j\leq m}
+\end{eqnarray}
+
+where $K(y) = \kkot{y}$, $ K_\epsilon(x,y) = K(x-y) + \epsilon
+K(x+y)$ for $\epsilon = 0, \pm 1$, $O^+$ denotes the group
+$SO(\mbox{even})$ and $O^-$ the group $SO(\mbox{odd})$.
+
+In all applications below, there are enormous simplifications as
+all functions are even (we do not need to worry about signs in the
+Fourier transform or the inversion formulas).
+
+\begin{defi}[$I(x)$] $I(x)$ will denote the characteristic
+function of $[-1,1]$. \end{defi}
+
+\subsection{Needed Fourier Transforms}
+
+Let $\delta$ be the Dirac Delta functional: $\int f(x) \delta(x) =
+f(0)$. Let $I(x) = \chi_{[-1,1]}(x)$ be the characteristic
+function of the unit interval.
+
+\begin{lem}$\widehat{1} = \delta$
+\end{lem}
+
+\bp This is proved in the theory of distributions. Formally, using
+duality, one can argue $\int f \cdot 1 = \widehat{f}(0) = \int
+\widehat{f} \cdot \delta$. \ep
+
+\begin{lem}$\widehat{\ \ \chiint \ \ }(u) = K(u)$
+\end{lem}
+
+\bp
+\begin{eqnarray}
+\int_{-\infty}^{\infty} \chiint(x) e^{2\pi i xu} dx & = &
+\int_{-\foh}^{\foh} \Big[\cos (2\pi xu) + i \sin (2 \pi xu) \Big]
+dx \nonumber\\ & = & \int_{-\foh}^{\foh} \cos (2\pi xu) dx
+\nonumber\\ & = & \frac{\sin \pi u}{\pi u}
+\end{eqnarray} \ep
+
+\begin{lem}$\widehat{K(2x)}(u) = \foh I(u)$.
+\end{lem}
+
+\bp
+\begin{eqnarray}
+\widehat{K(2x)}(u) & = & \int_{-\infty}^{\infty} K(2x) e^{2 \pi i
+x u} dx \nonumber\\ & = & \int_{-\infty}^{\infty} K(2x) e^{2 \pi i
+2x (\foh u)} \frac{2dx}{2} \nonumber\\ & = & \foh
+\int_{-\infty}^{\infty} K(t) e^{2 \pi i t (\foh u)} dt \nonumber\\
+& = & \foh \chiint\left(\foh u\right) = \foh I(u).
+\end{eqnarray} \ep
+
+
+
+\begin{lem}$\widehat{K^2}(u) = (1 - |u|)I(u)$.
+\end{lem}
+
+\bp We use duality for even functions: $\int f(x)g(x)dx = \int
+\widehat{f}(y) \widehat{g}(y) dy$. See \cite{La2}, pages
+$242-243$. Let $K_{u}(t) = K(t)e^{2\pi i u t}$. Then
+$\widehat{K_{u}}(y) = \widehat{K}(y+u)$, and recall
+$\widehat{K}(y) = \chiint(y)$. As $K$ is even, the arguments below
+are justified.
+
+\begin{eqnarray} \int_{-\infty}^\infty  K^2(t) e^{2 \pi i
+ut} dt & = & \int_{-\infty}^\infty  \Big(K(t)\Big) \Big( K(t) e^{2
+\pi i ut} \Big) dt \nonumber\\ & = & \int_{-\infty}^\infty K(t)
+K_{u}(t) dt \nonumber\\ & = & \int_{-\infty}^\infty \chiint(y)
+\chiint(y+u) dy
+\end{eqnarray}
+
+$\chiint(y) \chiint(y+u)$ is one on the intersection of $\{-\foh
+\leq y \leq \foh\}$ and $\{-\foh \leq y + u \leq \foh\}$ and zero
+elsewhere. If $|u|
+> 1$, $\chiint(y) \chiint(y+u) = 0$, and the integral vanishes.
+If $u \in [0,1]$, the intersection is $-\foh \leq y \leq \foh -
+u$, and integrating over $y$ gives $1 - u$. If $u \in [-1,0]$, it
+is one on the intersection of $\{-\foh \leq y \leq \foh\}$ and
+$\{-\foh \leq y - |u| \leq \foh\}$. We get $-\foh + |u| \leq y
+\leq \foh$, and integrating over $y$ gives $1 - |u|$. Therefore
+the Fourier Transform of $K^2$ is $(1 - |u|)I(u)$. \ep
+
+
+
+\subsection{$1$-Level Densities}
+
+For $|u_1| \leq 1$, $\foh I(u_1) = -\foh I(u_1) + 1$.
+
+\begin{eqnarray}
+W_{1,O^+}(x_1) & = & \textbf{det} \Big( K_1(x_i,x_j) \Big)_{i,j
+\leq 1} \nonumber\\ & = & K_1(x_1,x_1) = 1 + K(2x_1) \nonumber\\ &
+= & 1(x_1) + K(2x_1) \nonumber\\ \widehat{W_{1,O^+} }(u_1) & = &
+\delta(u_1) + \foh I(u_1).
+\end{eqnarray}
+
+\begin{eqnarray}
+W_{1,O^-}(x_1) & = & \textbf{det} \Big( K_{-1}(x_i,x_j) \Big)_{i,j
+\leq 1} \nonumber\\ & & + \sum_{k=1}^1 \delta(x_k) \textbf{det}
+\Big( K_{-1}(x_i,x_j) \Big)_{i,j \neq 1} \nonumber\\ & = &
+K_{-1}(x_1,x_1) + \delta(x_1) \nonumber\\ & = & 1 - K(2x_1) +
+\delta(x_1) \nonumber\\ & = & 1(x_1) - K(2x_1) + \delta(x_1)
+\nonumber\\ \widehat{W_{1,O^-} }(u_1) & = & \delta(u_1) - \foh
+I(u_1) + 1(u_1).
+\end{eqnarray}
+
+
+\begin{eqnarray}
+W_{1,Sp}(x_1) & = & \textbf{det} \Big( K_{-1}(x_i,x_j) \Big)
+\nonumber\\ & = & K_{-1}(x_1,x_1) \nonumber\\ &=& 1(x_1) - K(2x_1)
+\nonumber\\ \widehat{W_{1,Sp} }(u_1) & = & \delta(u_1) - \foh
+I(u_1).
+\end{eqnarray}
+
+
+\begin{eqnarray}
+W_{1,U}(x_1) & = & \textbf{det} \Big( K_0(x_i,x_j)\Big)
+\nonumber\\ & = & K_0(x_1,x_1) = 1(x_1) \nonumber\\
+\widehat{W_{1,U} }(u_1) & = & \delta(u_1).
+\end{eqnarray}
+
+
+We have shown
+\begin{thm}[$1$-Level Densities]\label{thmonelevel}
+\begin{eqnarray}
+\widehat{W_{1,O^+} }(u) & = & \delta(u) + \foh I(u) \nonumber\\
+\widehat{W_{1,O} }(u) & = & \delta(u) + \foh \nonumber\\
+\widehat{W_{1,O^-} }(u) & = & \delta(u) - \foh I(u) + 1
+\nonumber\\ \widehat{W_{1,Sp} }(u) & = & \delta(u) - \foh I(u)
+\nonumber\\ \widehat{W_{1,U} }(u) & = & \delta(u).
+\end{eqnarray}
+For functions whose Fourier Transforms are supported in $[-1,1]$,
+the three orthogonal densities are indistinguishable, though they
+are distinguishable from $U$ and $Sp$. To detect differences
+between the orthogonal groups using the $1$-level density, one
+needs to work with functions whose Fourier Transforms are
+supported beyond $[-1,1]$.
+\end{thm}
+
+
+\subsection{Preliminaries for the $2$-Level Densities}
+
+\begin{eqnarray}
+W_{2,\epsilon}(x) & = & \textbf{det} \Big( K_\epsilon(x_i,x_j)
+\Big)_{i,j \leq 2} \nonumber\\ & = &
+K_\epsilon(x_1,x_1)K_\epsilon(x_2,x_2) -
+K_\epsilon(x_1,x_2)K_\epsilon(x_2,x_1) \nonumber\\ & = & \Big[ 1 +
+\epsilon K(2x_1) \Big] \Big[1 + \epsilon K(2x_2) \Big] -
+\nonumber\\ & & \Big[K(x_1-x_2) + \epsilon K(x_1+x_2) \Big] \Big[
+K(x_2-x_1) + \epsilon K(x_1+x_2) \Big] \nonumber\\ & = &
+W_{2,\epsilon,a}(x) - W_{2,\epsilon,b}(x).
+\end{eqnarray}
+
+We now calculate $\widehat{W_{2,\epsilon,a}}(u)$.
+
+\begin{eqnarray}
+W_{2,\epsilon,a}(x) & = & \Big[ 1 + \epsilon K(2x_1) \Big] \Big[1
++ \epsilon K(2x_2) \Big] \nonumber\\ & = & 1 + \epsilon K(2x_1) +
+\epsilon K(2x_2) + \epsilon^2 K(2x_1) K(2x_2) \nonumber\\ & = &
+1(x_1)1(x_2) + \epsilon K(2x_1) 1(x_2) + \epsilon 1(x_1) K(2x_2) +
+\epsilon^2 K(2x_1) K(2x_2) \nonumber\\ \widehat{W_{2,\epsilon,
+a}}(u) & = & \widehat{1(x_1)} \widehat{1(x_2)} + \epsilon
+\widehat{K(2x_1)} \widehat{1(x_2)} + \epsilon \widehat{1(x_1)}
+\widehat{K(2x_2)} + \widehat{K(2x_1)} \widehat{K(2x_2)}
+\nonumber\\  & = & \delta(u_1) \delta(u_2) + \frac{\epsilon}{2}
+I(u_1) \delta(u_2) + \frac{\epsilon}{2} \delta(u_1) I(u_2) +
+\frac{\epsilon^2}{4}I(u_1) I(u_2) \nonumber\\ & & \mbox{where} \ \
+I(u) = \ = \ \chi_{[-1,1]}(u)
+\end{eqnarray}
+
+It is straightforward to calculate the Fourier Transforms of the
+above, as each function is even and of the form
+$g_1(x_1)g_2(x_2)$. We also use the fact that $\widehat{g(2x)} =
+\foh \widehat{g}(\frac{x}{2})$.
+
+We now calculate $\widehat{W_{2,\epsilon,b}}(u)$. Note that $K$ is
+even, so $K(x_i-x_j) = K(x_j-x_i)$.
+
+\begin{eqnarray}
+W_{2,\epsilon,b}(x) & = & \Big[K(x_1-x_2) + \epsilon K(x_1+x_2)
+\Big] \Big[ K(x_2-x_1) + \epsilon K(x_1+x_2) \Big] \nonumber\\ & =
+& K^2(x_1-x_2) + \epsilon^2 K^2(x_1+x_2) + 2 \epsilon K(x_1-x_2)
+K(x_1+x_2) \nonumber\\ \widehat{W_{2,\epsilon,b}}(u) & = &
+\widehat{T_-}(u_1,u_2) + \epsilon^2 \widehat{T_+}(u_1,u_2) + 2
+\epsilon \widehat{T_3}(u_1,u_2)
+\end{eqnarray}
+
+Let $\eta = \pm 1$. Then
+
+\begin{eqnarray}
+\widehat{T_\eta}(u_1,u_2) = \int_{-\infty}^\infty
+\int_{-\infty}^\infty K^2(x_1+\eta x_2) e^{2\pi i (u_1,u_2) \cdot
+(x_1,x_2)} dx_1 dx_2.
+\end{eqnarray}
+
+Change variables: $t_1 = x_1 + \eta x_2, t_2 = x_2$. Then $x_1 =
+t_1 -\eta t_2, x_2 = t_2$, and the Jacobian is $+1$.
+
+\be \twovec{t_1}{t_2} \ = \ \mattwo{1}{\eta}{0}{1}
+\twovec{x_1}{x_2}, \ \ \ \twovec{x_1}{x_2} \ = \
+\mattwo{1}{-\eta}{0}{1}\twovec{t_1}{t_2}. \ee
+
+Hence $dx_1dx_2 = dt_1dt_2$, and $(u_1,u_2) \cdot (x_1,x_2) =
+u_1t_1 + (-\eta u_1 + u_2)t_2$. Hence
+
+\begin{eqnarray}
+\widehat{T_\eta}(u_1,u_2) & = & \int_{-\infty}^\infty
+\int_{-\infty}^\infty K^2(t_1) e^{2 \pi i ( u_1t_1 + (-\eta u_1 +
+u_2)t_2)}dt_1dt_2 \nonumber\\ & = & \int_{-\infty}^\infty K^2(t_1)
+e^{2 \pi i u_1t_1} dt_1 \int_{-\infty}^\infty 1(t_2) e^{2 \pi i
+(-\eta u_1 + u_2)t_2} dt_2 \nonumber\\ & = & \int_{-\infty}^\infty
+K^2(t_1) e^{2 \pi i u_1t_1} dt_1 \cdot \delta(-\eta u_1 + u_2)
+\end{eqnarray}
+
+We have previously shown the Fourier Transform of $K^2(x_1)$ is
+$(1 - |u_1|)I(u_1)$. We therefore find
+
+\begin{eqnarray}
+T_\eta(u_1,u_2) & = & \delta(-\eta u_1 + u_2) \cdot (1 - |u_1|
+)\cdot I(u_1).
+\end{eqnarray}
+
+We calculate $\widehat{T_3}(u_1,u_2)$, the Fourier Transform of
+$K(x_1-x_2)K(x_1+x_2)$. Change variables: $t_1 = x_1 - x_2$, $t_2
+= x_1 + x_2$. Therefore $x_1 = \foh t_1 + \foh t_2$, $x_2 = -\foh
+t_1 + \foh t_2$. The Jacobian is the absolute value of the
+determinant of the transformation, which is $\foh$. In the
+exponential we have $u_1x_1 + u_2x_2$, which becomes
+$\foh(u_1-u_2)t_1 + \foh(u_1+u_2)t_2$.
+
+\begin{eqnarray}
+\widehat{T_3}(u_1,u_2) & = & \int \int K(x_1-x_2) K(x_1+x_2) e^{2
+\pi i (u_1x_1 + u_2x_2)} dx_1 dx_2 \nonumber\\ & = & \int \int
+K(t_1) K(t_2) e^{2 \pi i (\foh(u_1-u_2)t_1 + \foh(u_1+u_2)t_2)}
+\frac{dt_1 dt_2}{2} \nonumber\\ & = & \foh \int K(t_1) e^{2 \pi i
+\foh (u_1-u_2)t_1} dt_1 \int K(t_2) e^{2 \pi i \foh (u_1+u_2)t_2}
+dt_2 \nonumber\\ & = & \foh \chiint(\frac{u_1-u_2}{2})
+\chiint(\frac{u_1+u_2}{2}) \nonumber\\ & = & \foh I(u_1-u_2)
+I(u_1+u_2),
+\end{eqnarray}
+
+where $I$ is the characteristic function of $[-1,1]$. If $|u_1| +
+|u_2| > 1$, the above vanishes; $I$ is symmetric, and either $u_1
+- u_2$ or $u_1 + u_2$ is $\pm(|u_1|+|u_2|)$. If $|u_1| + |u_2|
+\leq 1$, the above is $1$. Hence
+
+\begin{eqnarray}
+\widehat{T_3}(u_1,u_2) = \foh I(|u_1|+|u_2|).
+\end{eqnarray}
+
+Collecting the pieces we obtain
+
+\begin{eqnarray}
+\widehat{W_{2,\epsilon}}(u) & = & \widehat{T_-}(u_1,u_2) +
+\epsilon^2 \widehat{T_+}(u_1,u_2) + 2 \epsilon
+\widehat{T_3}(u_1,u_2) \nonumber\\ & = & \delta(u_1+u_2)
+\cdot(1-|u_1|)I(u_1) + \epsilon^2 \delta(-u_1+u_2)
+\cdot(1-|u_1|)I(u_1) + \epsilon I(|u_1|+|u_2|).
+\end{eqnarray}
+
+We have proved
+
+\begin{lem}[Expansion for $\widehat{W_{2,\epsilon}}(u)$]
+Let $K(y) = \frac{\sin \pi y}{\pi y}$, $K_\epsilon(x,y) = K(x-y) +
+\epsilon K(x+y)$,  $\epsilon = \pm 1$, and $W_{2,\epsilon}(x) =
+\textbf{det}(K_\epsilon(x_i,x_j))$. We have
+\begin{eqnarray}
+\widehat{W_{2,\epsilon}}(u) & = & \widehat{W_{2,\epsilon,a}}(u) -
+\widehat{W_{2,\epsilon,b}}(u) \nonumber\\ & = & \delta(u_1)
+\delta(u_2) + \frac{\epsilon}{2} I(u_1) \delta(u_2) +
+\frac{\epsilon}{2} \delta(u_1) I(u_2) + \frac{\epsilon^2}{4}I(u_1)
+I(u_2) + \nonumber\\ & & \left[\delta(u_1+u_2) +
+\gep^2\delta(-u_1+u_2)\right]\cdot(|u_1|-1)I(u_1) - \epsilon
+I(|u_1|+|u_2|).
+\end{eqnarray}
+\end{lem}
+
+$\\$ By duality, $\int \int f_1(x_1)f_2(x_2) W_{2,\epsilon}(x)
+dx_1 dx_2 = \int \int \widehat{f_1}(u_1) \widehat{f_2}(u_2)
+\widehat{W_{2,\epsilon}}(u) du_1 du_2$. Note (since $f_i$ is even)
+
+\begin{eqnarray}
+\int \int \hfo(u_1) \hft(u_2) \delta(\pm u_1+u_2)
+\cdot(|u_1|-1)I(|u_1|)du_1du_2 = \int_{-1}^1 (|u|-1) \hfo(u)
+\hft(u)du.
+\nonumber\\
+\end{eqnarray}
+
+We simplify $\int \hfo(u)\hft(u)du$. \textbf{We assume the support
+of each $\hfi$ is at most 1; this will still allow us to deal with
+non-trivial regions, as we can have $|u_1|+|u_2| > 1$.} By duality
+(for even functions), as $\hfi$ is supported in $(-1,1)$,
+
+\begin{eqnarray}
+\int_{-1}^1 \widehat{f_1}(u) \widehat{f_2}(u) du & = & \int
+f_1(x)f_2(x)dx \nonumber\\ & = & \int (f_1f_2)(x) dx \nonumber\\ &
+= & \widehat{f_1f_2}(0).
+\end{eqnarray}
+
+Therefore, for even functions of the form $f_1(x_1)f_2(x_2)$ whose
+Fourier Transforms are supported in $|u_i|\leq 1$,
+
+\begin{lem}\label{lemdensityepsilon}
+\begin{eqnarray}
+\int \int f_1(x_1)f_2(x_2) W_{2,\epsilon}(x) dx & = & \hfo(0)
+\hft(0) + \frac{\epsilon}{2}f_1(0)\hft(0) +
+\frac{\epsilon}{2}\hfo(0)f_2(0) + \frac{\epsilon^2}{4}f_1(0)f_2(0)
+\nonumber\\ & & + \ (1+\epsilon^2) \int_{-1}^1 (|u|-1) \hfo(u)
+\hft(u)du - \epsilon \int \int \hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2 \nonumber\\
+& = & \Big[\hfo(0) + \frac{\epsilon}{2} f_1(0) \Big] \Big[\hft(0)
++ \frac{\epsilon}{2} f_2(0) \Big] + \nonumber\\ & & (1+\epsilon^2)
+\int_{-1}^1 |u| \hfo(u) \hft(u)du  -
+(1+\epsilon^2)\widehat{f_1f_2}(0) \nonumber\\ & &- \epsilon \int
+\int \hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2.
+\end{eqnarray}
+\end{lem}
+
+We could replace $\widehat{f_1f_2}(0)$ by leaving the $-1$ in the
+$|u|$-integral:
+
+\begin{eqnarray}
+\int \int f_1(x_1)f_2(x_2) W_{2,\epsilon}(x) dx & = & \Big[\hfo(0)
++ \frac{\epsilon}{2} f_1(0) \Big] \Big[\hft(0) +
+\frac{\epsilon}{2} f_2(0) \Big] + \nonumber\\ & & (1+\epsilon^2)
+\int_{-1}^1 (|u|-1) \hfo(u) \hft(u)du  - \epsilon \int\int
+\hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2.\nonumber\\
+\end{eqnarray}
+
+For $SO(even)$, setting $\epsilon = 1$ above yields the 2-level
+expansion, valid for any support.
+
+\subsection{$2$-Level Densities}
+
+We calculate the pieces needed to evaluate the densities (Equation
+\ref{eqdensitykernels}).  We calculate \\ $\sum_{k=1}^2
+\delta(x_k) \textbf{det} (K_{-1}(x_i,x_j))_{i,j\neq k}$; we've
+already calculated $W_{2,\epsilon}(x) = \textbf{det}
+(K_\epsilon(x_i,x_j))$.
+
+\begin{eqnarray}
+(W_{2,O^-})_{2}(x) & = & \sum_{k=1}^2 \delta(x_k)
+\textbf{det}(K_{-1}(x_i,x_j))_{i,j\neq k} \nonumber\\ & = &
+\delta(x_1) K_{-1}(x_2,x_2) + \delta(x_2) K_{-1}(x_1,x_1)
+\nonumber\\ & = & \delta(x_1)\Big( 1 - K(2x_2) \Big) + \delta(x_2)
+\Big( 1 - K(2x_1) \Big) \nonumber\\ & = & \delta(x_1) +
+\delta(x_2) - \delta(x_1) K(2x_2) - \delta(x_2) K(2x_1)
+\nonumber\\ & = & \delta(x_1)1(x_2) + 1(x_1)\delta(x_2) -
+\delta(x_1) K(2x_2) - K(2x_1) \delta(x_2) \nonumber\\
+\widehat{(W_{2,O^-})_{2}}(u) & = & 1(u_1)\delta(u_2) +
+\delta(u_1)1(u_2) - \foh 1(u_1)I(u_2) - \foh I(u_1)1(u_2).
+\nonumber\\
+\end{eqnarray}
+
+We determine the effect of $\widehat{(W_{2,O^-})_{2}}(u)$ on
+$\widehat{f_1}(u_1)\widehat{f_2}(u_2)$ when $\mbox{supp}(f_i) <
+1$.
+
+\begin{eqnarray}
+\int \int \widehat{f_1}(u_1)\widehat{f_2}(u_2)
+\widehat{(W_{2,O^-})_{2}}(u) & = & \int \int
+\hfo(u_1)\hft(u_2)1(u_1)\delta(u_2) + \int \int
+\hfo(u_1)\hft(u_2)\delta(u_1)1(u_2) \nonumber\\ & & - \foh \int
+\int \hfo(u_1)\hft(u_2)1(u_1)I(u_2) \nonumber\\ & & - \foh \int
+\int \hfo(u_1)\hft(u_2) I(u_1)1(u_2) \nonumber\\ & = &
+f_1(0)\widehat{f_2}(0) + \widehat{f_1}(0) f_2(0) - \foh
+f_1(0)f_2(0) - \foh f_1(0)f_2(0) \nonumber\\ & = &
+f_1(0)\widehat{f_2}(0) + \widehat{f_1}(0) f_2(0) - f_1(0)f_2(0).
+\end{eqnarray}
+
+
+
+\begin{thm}[$\mathcal{G} = SO(\mbox{even})$, $O$,
+or $SO(\mbox{odd})$]\label{thmtwolevel}
+
+Let $O^\gep$ represent $SO(\mbox{even})$ for $\gep = 1$ and
+$SO(\mbox{odd})$ for $\gep = -1$. For even functions supported
+with $\mbox{supp}(f_i) < 1$,
+\begin{eqnarray}
+\int \int \widehat{f_1}(u_1)\widehat{f_2}(u_2)
+\widehat{W_{2,\mathcal{O}^\gep}}(u) du_1du_2 &= & \Big[\hfo(0) +
+\foh f_1(0) \Big] \Big[\hft(0) + \foh f_2(0) \Big] \nonumber\\ & &
++ \ 2 \int_{-1}^1 (|u|-1) \hfo(u) \hft(u)du - \epsilon \int\int
+\hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2 \nonumber\\ & & - \
+\frac{1-\gep}{2}f_1(0)f_2(0).
+\end{eqnarray}
+\end{thm}
+
+\begin{rek} The term $\epsilon \int
+\hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2$ arises from $\int \int
+f_1(x_1)f_2(x_2) K(x_1-x_2) K(x_1+x_2)dx_1dx_2$.
+\end{rek}
+
+\begin{rek} Remember $I(|u_1|+|u_2|) = I(u_1-u_2) I(u_1+u_2)$.
+\end{rek}
+
+For arbitrarily small support, the three $2$-level densities
+differ. One increases by a factor of $\foh f_1(0) f_2(0)$ moving
+from $\widehat{W_{2,O^+}}$ to $\widehat{W_{2,O}}$ to
+$\widehat{W_{2,O^-}}$ when each $\hfi$ is supported in
+$(-\foh,\foh)$.
+
+\begin{rek} For comparison purposes, we record the 2-level moment
+for SO(even). We assume $\hphi_1 = \hphi_2 = \hphi$ is supported
+in $(-1,1)$. Thus, there are no combinatorial terms in the 2-level
+density arising from odd elements (as everything is even). We have
+to \emph{add back} twice the 1-level density with test function 
+$\phi^2$ (this was because we were summing over $j_1 \neq \pm
+j_2$); thus, we add back $2D_{1,SO(even)}(\phi^2)$.
+
+If $\mbox{supp}(\hphi) = \sigma \in (\foh,1)$, then
+$\mbox{supp}(\widehat{\phi^2}) > 1$. Thus, as $\sigma < 1$,
+
+\bea D_{1,SO(even)}(\phi^2) & \ = \ & \widehat{\phi^2}(0) + \foh
+\int \widehat{\phi^2}(u) I(u)du \nonumber\\ & = & \int \hphi(u)^2
+I(u)du + \foh \int \widehat{\phi^2}(u) I(u)du. \eea
+
+We subtract twice this, as well as the mean, $\left[ \hphi(0) +
+\foh \phi(0)\right]^2$. We are left with the 2-level moment:
+
+\bea 2 \int |u| \hphi(u)^2 I(u)du - \int\int \hphi(u)^2
+I(|u_1|+|u_2|)du_1du_2 + \int \widehat{\phi^2}(u) I(u)du. \eea
+
+\textbf{I believe the above is the centered second moment,
+assuming $\hphi$ is supported in $(-1,1)$. For support in
+$(-\foh,\foh)$, the last two terms add to zero. Further, the
+middle term comes from the $2K(x_1-x_2) K(x_1+x_2)$ term; in your
+notation, this was $2S(x_1-x_2) S(x_1+x_2)$.}
+
+\end{rek}
+
+
+To determine the density for $Sp$, we use Lemma
+\ref{lemdensityepsilon} with $\epsilon = -1$. Rewriting the result
+in a similar form as the orthogonal densities yields
+
+\begin{thm}[$\mathcal{G} = Sp$] For even functions supported
+with $\mbox{supp}(f_i) < 1$,
+\begin{eqnarray}
+\int \int \widehat{f_1}(u_1)\widehat{f_2}(u_2)
+\widehat{W_{2,Sp}}(u) du_1du_2 &= & \Big[\hfo(0) - \frac{1}{2}
+f_1(0) \Big] \Big[\hft(0) - \frac{1}{2} f_2(0) \Big] + \nonumber\\
+& & 2 \int_{-1}^1 (|u|-1) \hfo(u) \hft(u)du  + \int
+\hfo(u_1)\hft(u_2)I(|u_1|+|u_2|)du_1du_2.\nonumber\\
+\end{eqnarray}
+\end{thm}
+
+To calculate $W_{2,U}(x)$, we need to take the determinant of
+
+\begin{eqnarray}
+\left(\begin{array}{cc}
+             1 & \frac{\sin \pi(x_1-x_2)}{\pi(x_1-x_2)} \\
+           \frac{\sin \pi(x_1-x_2)}{\pi(x_1-x_2)}  & 1
+\end{array}\right)
+\end{eqnarray}
+
+Thus we need the Fourier Transform of $1 - \Big(\frac{\sin
+\pi(x_1-x_2)}{\pi(x_1-x_2)}\Big)^2$. We find
+
+\begin{thm}[$\mathcal{G} = U$]
+\begin{eqnarray}
+\widehat{W_{2,U}}(u) = \delta(u_1)\delta(u_2) -
+\delta(u_1+u_2)\cdot (1-|u_1|)I(u_1).
+\end{eqnarray}
+Thus
+\begin{eqnarray}
+\int \int \widehat{f_1}(u_1)\widehat{f_2}(u_2) \widehat{W_{2,U}}
+du_1du_2 &= & \hfo(0)\hft(0) + \int_{-1}^1 (|u|-1) \hfo(u)
+\hft(u)du.
+\end{eqnarray} \\
+\end{thm}
+
+Thus, for test functions with arbitrarily small support, the
+$2$-level densities for the classical compact groups are mutually
+distinguishable.
+
+
+
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!new section!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+\appendix
+
+\section{Fourier Transform Simplifications}
+
+Let $I(u)$ be the characteristic function of $[-1,1]$. If $K(x) =
+\frac{\sin \pi x}{\pi x}$, note $\widehat{K(2x)}(u) = \foh I(u)$.
+All functions below will be even Schwartz functions whose Fourier
+Transforms have finite support. As all functions below are even,
+we can use $\widehat{\widehat{f}}(u) = f(u)$, $\int \widehat{f}(u)
+\widehat{g}(u)dt = \int f(x)g(x)dx$.
+
+\begin{lem} \be \int_{u_1} I(|u_1|+|u_2|) e^{-2\pi i u_1 x_1}du_1
+\ = \ \frac{\sin(2\pi(1-|u_2|)x_1)}{\pi x_1}. \ee \end{lem}
+
+\bp This follows immediately from integrating. \ep
+
+\begin{lem} \be \int_{u_2} \int_{u_1} \hphi(u_2)\hphi(u_1)
+I(|u_1|+|u_2|)du_1du_2 \ = \ \int_u \widehat{\phi^2}(u)I(u)du. \ee
+\end{lem}
+
+\bp We have calculated the Fourier Transform of $I(|u_1|+|u_2|)$
+with respect to $u_1$ above. Then
+
+\bea \int_{u_2} \int_{u_1} \hphi(u_2)\hphi(u_1)
+I(|u_1|+|u_2|)du_1du_2 & \ = \ & \int_{u_2}\hphi(u_2) \int_{x_1}
+\phi(x_1) \frac{\sin(2\pi(1-|u_2|)x_1)}{\pi x_1} dx_1du_2. \ \ \
+\eea
+
+When we expand $\sin(2\pi(1-|u_2|)x_1)$, as $\hphi$ is even, we
+need only keep the even term in $u_2$, $\sin(2\pi x_1) \cos(2\pi
+|u_2|x_1)$. \textbf{This is wrong -- it is $|u_2|$ which appears,
+not $u_2$; thus, we don't get a cancellation from oddness.} As
+$\hphi$ is even, we may replace $\cos(2\pi|u_2|x_1)$ with
+$e^{-2\pi i u_2 x_1}$. \textbf{What follows is just one of the
+terms, from the sin cos.} Thus,
+
+\bea \int_{u_2} \int_{u_1} \hphi(u_2)\hphi(u_1)
+I(|u_1|+|u_2|)du_1du_2 & \ = \ & \int_{u_2} \hphi(u_2)\int_{x_1}
+\phi(x_1) \frac{\sin(2\pi x_1)}{\pi x_1} e^{-2\pi i u_2x_1}
+dx_1du_2 \nonumber\\ & = & 2\int_{x_1} \phi(x_1) \frac{\sin(2\pi
+x_1)}{2\pi x_1} \int_{u_2} \hphi(u_2) e^{-2\pi i u_2 x_1} du_2
+dx_1 \nonumber\\ & = & 2\int_{x_1} \phi(x_1) K(2x) \cdot \phi(x_1)
+dx_1 \nonumber\\ & = & 2 \int_{x_1} \phi(x_1)^2 K(2x) dx_1 \ = \
+\int_u \widehat{\phi^2}(u) I(u)du. \eea
+
+\ep
+
+\begin{lem}\label{lempsitwohat} $\widehat{\Psi_2}(x) = \phi(x)^2$ and
+$\widehat{\Psi_3}(x) = \phi(x)^2$. \end{lem}
+
+\bp The Fourier Transform converts convolution to multiplication:
+
+\bea \Psi_2(u) & \ = \ & \int_w \hphi(w) \hphi(u-w)dw \nonumber\\
+\widehat{\Psi_2}(x) & = & \int_u \int_w \hphi(w) \hphi(u-w)
+e^{-2\pi i xu} dwdu \nonumber\\& = & \int_w \hphi(w) e^{-2\pi i
+wx} dw \int_u \hphi(u) e^{-2\pi i xu}du \ = \ \phi(u)^2. \eea
+
+Similarly $\widehat{\Psi_3}(x) = \widehat{\Psi_2}(x)\phi(x) =
+\phi(x)^3$. \ep
+
+\begin{lem}\label{lemwidehatphisquaredzero} $\widehat{\phi^2}(0) = \int \hphi(u)^2 I(u)du$.
+\end{lem}
+
+\bp As $\mbox{supp}(\phi) \subset (-1,1)$,
+
+\bea \widehat{\phi^2}(0) \ = \ \int_x \phi(x)^2 dx  \ = \ \int_x
+\phi(x) \phi(x) dx  \ = \ \int_u \hphi(u) \hphi(u)du  \ = \ \int_u
+\hphi(u)^2 I(u)du. \eea \ep
+
+
+\begin{acknowledgements}
+Both authors thank AIM for its generous support; the second author
+also wishes to thank Princeton and Ohio State.
+\end{acknowledgements}
+
+\begin{thebibliography}{PTW02} % '2nd argument contains the widest acronym'
+
+
+\bibitem[CFKRS]{CFKRS}
+\newblock B. Conrey, D. Farmer, P. Keating, M. Rubinstein and N.
+Snaith, \emph{Integral Moments of $L$-Functions},
+http://arxiv.org/pdf/math.NT/$0206018$
+
+\bibitem[Da]{Da}
+\newblock H. Davenport, \emph{Multiplicative Number Theory, $2$nd edition},
+ Graduate Texts in Mathematics \textbf{74}, Springer-Verlag, New York,
+ $1980$, revised by H. Montgomery.
+
+\bibitem[De]{De}
+\newblock P. Deligne, \emph{La conjecture de Weil. II} Inst. Hautes \'Etudes
+Sci. Publ. Math. \textbf{52}, $1980$, $137-252$.
+
+\bibitem[HW]{HW}
+\newblock G. Hardy and E. Wright, \emph{An Introduction to the
+Theory of Numbers}, fifth edition, Oxford Science Publications,
+Clarendon Press, Oxford, $1995$.
+
+\bibitem[Hej]{Hej}
+\newblock D. Hejhal, \emph{On the triple correlation of zeros of
+the zeta function}, Internat. Math. Res. Notices $1994$, no. $7$,
+$294-302$.
+
+\bibitem[HR]{HR}
+\newblock C. Hughes and Z. Rudnick, \emph{Linear Statistics of
+Low-Lying Zeros of $L$-functions}, to appear.
+
+\bibitem[ILS]{ILS}
+\newblock H. Iwaniec, W. Luo and P. Sarnak, \emph{Low lying zeros of
+families of $L$-functions}, Inst. Hautes \'Etudes Sci. Publ. Math.
+\textbf{91}, $2000$, $55-131$.
+
+\bibitem[KS1]{KS1}
+\newblock N. Katz and P. Sarnak, \emph{Random Matrices, Frobenius
+Eigenvalues and Monodromy}, AMS Colloquium Publications
+\textbf{45}, AMS, Providence, $1999$.
+
+\bibitem[KS2]{KS2}
+\newblock N. Katz and P. Sarnak, \emph{Zeros of zeta functions and symmetries},
+Bull. AMS \textbf{36}, $1999$, $1-26$.
+
+\bibitem[La1]{La1}
+\newblock S. Lang, \emph{Algebraic Number Theory}, Graduate Texts in
+Mathematics \textbf{110}, Springer-Verlag, New York, $1986$.
+
+\bibitem[La2]{La2}
+\newblock S. Lang, \emph{Real and Functional Analysis}, Graduate Texts in
+Mathematics \textbf{142}, Springer-Verlag, New York, $1993$.
+
+\bibitem[Mil1]{Mil1}
+\newblock S. J. Miller, \emph{$1$- and $2$-Level Densities for Families of Elliptic
+Curves: Evidence for the Underlying Group Symmetries}, P.H.D.
+Thesis, Princeton University, $2002$,
+http://www.math.princeton.edu/$\sim$sjmiller/thesis/thesis.pdf.
+
+\bibitem[Mil2]{Mil2}
+\newblock S. J. Miller, \emph{$1$- and $2$-Level Densities for Families of Elliptic
+Curves: Evidence for the Underlying Group Symmetries}, Compositio
+Mathematica, to appear.
+
+\bibitem[Mon]{Mon}
+\newblock H. Montgomery, \emph{The pair correlation of zeros of the zeta
+function}, Analytic Number Theory, Proc. Sympos. Pure Math.
+\textbf{24}, Amer. Math. Soc., Providence, $1973$, $181-193$.
+
+\bibitem[Ru]{Ru}
+\newblock M. Rubinstein, \emph{Evidence for a spectral
+interpretation of the zeros of $L$-functions}, P.H.D. Thesis,
+Princeton University, $1998$,
+http://www.ma.utexas.edu/users/miker/thesis/thesis.html.
+
+\bibitem[RS]{RS}
+\newblock Z. Rudnick and P. Sarnak, \emph{Zeros of principal $L$-functions
+ and random matrix theory}, Duke Journal of Math. \textbf{81},
+ $1996$, $269-322$.
+
+
+\end{thebibliography}
+
+\end{document}

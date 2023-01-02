@@ -1,0 +1,52 @@
+Denote by $G$ any one of the classical compact matrix groups, namely the orthogonal group $\Orth$, the even special orthogonal group $\SpOrthE$, the odd special orthogonal group $\SpOrthO$, and the symplectic group $\Symp$. The $1$-level densities of each of these groups are known to be
+\begin{align*}
+	W_\Orth (x) 
+		&= 1 + \frac12 \delta_0 (x), \\
+	W_{\SpOrthE} (x) 
+		&= 1 + \frac{\sin 2\pi x}{2\pi x}, \\
+	W_{\SpOrthO} (x)
+		&= 1 - \frac{\sin 2 \pi x}{2 \pi x} + \delta_0 (x), \\
+	W_{\Symp} (x)
+		&= 1 - \frac{\sin 2\pi x}{2\pi x}.			
+\end{align*}
+Here $\delta_0 (x)$ is the Dirac delta centered at zero. The corresponding Fourier transforms take the form
+	\[ \widehat W_G (\xi) = \delta_0 (\xi) + m_G (\xi) \]
+where
+\begin{align*}
+	m_\Orth (\xi) 
+		&= \frac12, \\
+	m_{\SpOrthE} (\xi)
+		&= \frac12 \mathbb 1_{[-1, 1]} (\xi), \\
+	m_{\SpOrthO} (\xi)
+		&= 1 - \frac12 \mathbb 1_{[-1, 1]} (\xi), \\
+	m_{\Symp} (\xi)	
+		&= - \frac12 \mathbb 1_{[-1, 1]} (\xi).	
+\end{align*}
+Define
+	\[ \frakI_G (\sigma) = \inf_\phi \frac{1}{\phi(0)} \int_\R \phi(x) W_G (x) dx \]
+where the infimum is taken over non-negative Schwarz functions $\phi : \R \to [0, \infty)$ with compactly supported Fourier transform satisfying $\supp (\widehat \phi) \subseteq [-2\sigma, 2\sigma]$. We refer to such $\phi$ as \textsc{test functions}. We are interested in studying the following:
+\begin{enumerate}
+	\item Finding test functions witnessing the infimum $\frakI_G (\sigma)$ for fixed $\sigma$ and group $G$, i.e. finding $\phi$ satisfying $\supp(\widehat \phi) \subseteq [-2\sigma, 2\sigma]$ and
+			\[ \frakI_G (\sigma) = \frac{1}{\phi(0)} \int_\R \phi(x) W_G (x) dx \]
+	 
+	\item Computing the value of $\frakI_G (\sigma)$. 
+	\item Analyzing the behavior of $\frakI_G$ as a real function on $(0, \infty)$. In particular, Freeman conjectured that $\frakI_G$ is continuous and real analytic except at integers and half-integers. 
+\end{enumerate}
+Fix $\sigma > 0$ and one of our aforementioned compact groups $G$; for brevity we suppress the subscripts $W := W_G$ and $m := m_G$. Moreover, whenever we define a new object in terms of $W$ and $m$, there is an implicit subscript $G$ to denote the dependence on the group. 
+
+In the literature, no one tries to directly find the optimal test function $\phi$, instead appealing to functional analytic arguments. For example, it follows from a theorem of Ahiezer and the Paley-Wiener theorem that the optimal test function admits the form $\phi(z) = |h(z)|^2$, where $h : \C \to \C$ is an entire function of exponential type 1 and $h \in L^2 (\R)$. That is, its Fourier transform admits the form  
+	\[ \widehat \phi (\xi) = (g * g^\smile) (\xi) \]
+where $\supp g \subseteq [-\sigma, \sigma]$ and $g \in L^2 [-\sigma, \sigma]$ and $g^\smile (\xi) = \close{g(- \xi)}$. Notice that the Fourier transforms of the distributions $W$ are significantly easier to work with as they are step functions, so naturally we appeal to the Plancharel theorem to write
+	\[\frac{1}{\phi(0)} \int_\R \phi(x) W (x) dx = \frac{1}{\int_\R \widehat \phi(\xi) d\xi} \int_\R \widehat \phi (\xi) \widehat W (\xi) d\xi . \]
+Rewriting $\widehat \phi$ in terms of $g \in L^2 [-\sigma, \sigma]$ converts the problem to an equivalent optimization over the Hilbert space $L^2$ (for details of derivation, cf. Freeman Proposition 3.2), namely  
+	\[ \frakI_G (\sigma) = \inf_{g \in L^2 [-\sigma, \sigma]} R(g), \]
+where we define a quadratic form $R : L^2 [-\sigma, \sigma] \to \R$ and a self-adjoint operator $K: L^2 [-\sigma, \sigma] \to L^2 [-\sigma, \sigma]$ by 
+	\[ R(g) = \frac{\langle (I + K)g,g \rangle}{| \langle g, 1 \rangle |^2}, \qquad (Kg) (x) = \int_{-\sigma}^\sigma m(x - y) g(y) dy, \]	
+where $I$ is the identity operator on $L^2 [-\sigma, \sigma]$. By functional analysis hocus pocus, the constant function one is in the image of $I + K$. Moreover, there exists $f \in (\ker (I + K))^\perp$ satisfying the equation
+	\[ (I + K) f \equiv 1. \]
+This implies $A := \langle (I + K)f, f\rangle = \langle 1, f\rangle$ is a positive constant. ILS proved that in fact
+	\[ \frakI_G (\sigma) = \inf_{g \in L^2 [-\sigma, \sigma]} R(g) = R(f) = \frac{1}{A}.  \]
+ILS showed that if $\sigma = 1$, then the optimal functions $f \in L^2 [-1, 1]$ are even, and are trigonometric polynomials when restricted to $[0, 1]$. Freeman extended this result to arbitrary $\sigma > 0$. The brute force approach to this problem is to to find a trigonometric polynomial $f: [0, \sigma] \to \R$, i.e. taking the form
+	\[ f(x) = \sum_{n \geq 0} a_n \cos(nx) + b_n \sin(nx) \]
+where $a_n, b_n = 0$ for all $n \geq N$, such that $(I + K) f$ is a constant. Normalizing by this constant gives the desired equation $(I + K)f \equiv 1$. Since $f$ is even, we can extend it to a function on $[-\sigma, \sigma]$ to recover the desired optimal function. 
+	

@@ -1,0 +1,55 @@
+There are three key observations. First, the kernels take the form of quadratic polynomials in $|x|$ on the interval $[-1, 1]$, i.e. $m_{G, \psi} (x) = -a - b |x| - c |x|^2$ whenever $x \in [-1, 1]$. Second, the solutions found in \cite{FreemanMiller} and \cite{ILS} to the $1$-level density case for varying support took the form of piecewise trigonometric polynomials, and in particular continuously differentiable everywhere except finitely many points. Third, the right-hand side of (\ref{eq:fredholm}) is constant with respect to $x \in [-1/2, 1/2]$. Therefore, assuming $g$ is sufficiently smooth, we can differentiate the Fredholm integral equation (\ref{eq:fredholm}) to obtain a corresponding system of linear homogeneous differential equations. 
+
+\begin{lemma}
+	If $g \in L^2 [-1/2, 1/2]$ is smooth and solves
+		\begin{equation}
+			1 = g(x) + \int_{-1/2}^{1/2} (a + b |x - y| + c |x - y|^2) g(y) dy, 	\label{eq:fredholmquad}
+		\end{equation}
+	then it satisfies for $x \in [-1/2, 1/2]$ the following system of equations,  
+	\begin{align}
+		1
+			&= g(0) + a \int_{-1/2}^{1/2} |y| g(y) dy, \label{eq:diff1}\\
+		0 
+			&= g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy, \label{eq:diff2} \\
+		0
+			&= g''' (x) + 2b g'(x).		\label{eq:diff3}	
+	\end{align}
+\end{lemma}
+
+\begin{proof}
+	Notice that 
+	\[  \int_{-1/2}^{1/2} |x - y| g(y) dy = \int_{-1/2}^x (x - y) g(y) dy + \int_x^{1/2} (y - x) g(y) dy. \]
+Differentating under the integral sign gives	
+	\begin{align*}
+		\frac{d}{dx}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+			&= \int_{-1/2}^x g(y) dy - \int_x^{1/2} g(y) dy, \\
+		\frac{d^2}{dx^2}  \int_{-1/2}^{1/2} |x - y| g(y) dy 
+			&= 2g(x)		
+	\end{align*}
+	and
+	\begin{align*}
+		\frac{d}{dx} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&= \int_{-1/2}^{1/2} (2x - 2y) g(y) dy, \\
+		\frac{d^2}{dx^2} \int_{-1/2}^{1/2} (x - y)^2 g(y) dy
+			&= 2 \int_{-1/2}^{1/2} g(y) dy.
+	\end{align*}
+	And on the First Day of Genesis, He the God of Math deemed the rest to be trivial. 
+\end{proof}
+
+\begin{theorem}
+	The solutions take the form
+		\[ g(x) = \frac{6b^{3/2} (b + c) \cos(\sqrt{2b} x) - 6 \sqrt{2} b c \sin{\sqrt{b/2}}}{6 \sqrt{b} (b + c)^2 \cos{\sqrt{b/2}} + \sqrt{2} (6 a b^2 + 3b^3 + 3b^2 c + b c (c - 12) - 6c^2) \sin (\sqrt{b/2})}. \]	
+\end{theorem}
+
+\begin{proof}
+	Assuming $g$ is even, has solutions of (\ref{eq:diff3}) take the form $A \cos(\sqrt{2b} x) + C$. This has two degrees of freedom. Substituting into $(\ref{eq:diff2})$ reduces to one degree of freedom, 
+	\begin{align*}
+		0 
+			&= g'' (x) + 2b g(x) + 2c \int_{-1/2}^{1/2} g(y) dy \\
+			&= 2C (b + c) + \frac{4A c}{\sqrt{2b}} \sin\left( \frac{\sqrt{2b}}{2} \right).
+	\end{align*}
+This shows that $g$ is a scalar multiple of  
+	\[ \cos(\sqrt{2b} x) - \frac{2c}{b + c} \frac{\sin\left( \sqrt{b/2} \right)}{\sqrt{2b}}. \]	
+Obviously this implies that $b \geq 0$ if we want to avoid nasty complexifications. Pumping into Wolfram Alpha, we obtain
+	\[ g(x) = \frac{6b^{3/2} (b + c) \cos(\sqrt{2b} x) - 6 \sqrt{2} b c \sin{\sqrt{b/2}}}{6 \sqrt{b} (b + c)^2 \cos{\sqrt{b/2}} + \sqrt{2} (6 a b^2 + 3b^3 + 3b^2 c + b c (c - 12) - 6c^2) \sin (\sqrt{b/2})}. \]	
+\end{proof}	

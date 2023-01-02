@@ -1,0 +1,31 @@
+One can improve the bounds found in Table \ref{tab:bounds} by choosing $\phi_{G, \psi}$ as our new fixed test function and optimizing accordingly. As $\widehat{\phi_{G, \psi}}$ takes the form of a piecewise trigonometric polynomial for each of the classical compact groups, the methods used in Section \ref{sec:quadker} are not applicable. We instead appeal to the standard approach to solving Fredholm integral equations by method of iteration. Suppose an even continuous kernel $m: [-1, 1] \to \R$ satisfies
+	\begin{equation}
+		\int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m(x - y)|^2 dx dy < 1. 
+	\end{equation}
+Define a self-adjoint compact operator $K: L^2 [-1/2, 1/2] \to L^2[-1/2, 1/2]$ by
+	\begin{equation}
+		(Kf)(x) := \int_{-1/2}^{1/2} m(x - y) f(y) dy.
+	\end{equation}
+It follows from the Cauchy-Schwarz inequality that the operator norm satisfies $||K||_{L^2 \to L^2} < 1$, that is, $K$ is a contraction mapping, since
+	\begin{equation}
+		||Kg||_2^2 = \int_{-1/2}^{1/2} \left( \int_{-1/2}^{1/2} m(x - y) g(y) dy \right)^2 dx \leq ||g||_2^2 \int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m(x - y)|^2 dx dy < 1. 
+	\end{equation}	
+Thus by the Weierstrass $M$-test, the series
+	\begin{equation}
+		g(x) := \sum_{n = 0}^\infty (-1)^n K^n (1)(x)
+	\end{equation}
+converges absolutely and uniformly on the interval $[-1/2, 1/2]$. Moreover, it is the unique continuous solution to the Fredholm integral equation $(I + K) g = 1$. Since the series converges absolutely, we can integrate term by term to obtain the corresponding minimum value,
+	\begin{equation}
+		\frac{c_{G, \phi}}{\langle 1, g \rangle} = c_{G, \phi}\left( \sum_{n = 0}^\infty (-1)^n \int_{-1/2}^{1/2} K^n (1) (x) dx \right)^{-1}. \label{eq:seriesmin}
+	\end{equation}
+Unfortunately, this method of deriving new bounds is computationally intensive as we need to compute $n$-dimensional integrals of unwieldy expressions. Additionally, depending on the rate of convergence we may need to compute a large number of terms to obtain meaningful degrees of accuracy. For the purposes of this paper we focus on the unitary group, where these challenges can be avoided. 
+
+For brevity, denote $\phi := \phi_{\Unit, \psi}$. In this case we know the series converges, as
+\begin{align}
+		\int_{-1/2}^{1/2} \int_{-1/2}^{1/2} |m_{\Unit, \phi}(x - y)|^2 dx dy = \frac{2 \sin^2 (1) (128 - 110 \cos (2) - 37 \sin (2))}{3 (-8 + 6 \cos (2) - \sin (2))^2} < 1.
+\end{align}
+Moreover, $\widehat{\phi}$ is non-negative, so it follows that $(-1)^n K^n_{\Unit, \phi}(1)$ is non-negative. We can therefore truncate the series in (\ref{eq:seriesmin}) to obtain a legitimate upper bound, as the terms are non-negative. Summing five terms gives the bound
+	\begin{equation}
+		\inf_\Phi \frac{1}{\Phi(0, 0)} \int_{\R^2} \Phi(x, y) W_{2, \Unit} (x, y) dx dy \leq c_{G, \psi}\left( \sum_{n = 0}^5 (-1)^n \int_{-1/2}^{1/2} K^n (1) (x) dx \right)^{-1} \approx 0.4888,
+	\end{equation}
+a small improvement on our previous bound in Table \ref{tab:bounds}.
